@@ -18,9 +18,9 @@ import model.MenuItem;
  */
 public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
     private static final String GET_MENU_ITEMS_SQL = 
-            "SELECT name, price FROM menuItems";
+            "SELECT name, price FROM menuitems";
     private static final String INSERT_MENU_ITEM_SQL =
-            "INSERT INTO menuItems " + 
+            "INSERT INTO menuitems " + 
             "(name, price) " +
             "VALUES (?, ?)";
     public MenuItemDAOImpl() {
