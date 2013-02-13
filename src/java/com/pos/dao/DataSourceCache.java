@@ -25,7 +25,7 @@ public class DataSourceCache {
         try{
             context = new InitialContext();
             dataSource = (DataSource)context.lookup(
-                    "java:comp/env/jdbc/POSDataSource");
+                    "java:comp/env/jdbc/posDataSource");
         }catch (NamingException e){}
     }
     
