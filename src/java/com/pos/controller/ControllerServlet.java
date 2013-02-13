@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @WebServlet(name = "ControllerServlet", urlPatterns = {"/item_input", "/item_save",
-    "/view_items"})
+    "/view_items", "/", "", "/login"})
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     
@@ -81,6 +81,10 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("view_items")){
             dispatchUrl = "jsp/ViewItems.jsp";
+        }
+        
+        else if (action.equals("login") || action.equals("") || action.equals("login")){
+            dispatchUrl = "jsp/Login.jsp";
         }
         
         if(dispatchUrl != null){
