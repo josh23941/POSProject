@@ -14,9 +14,8 @@
     </head>
     <body>
         <p>
-            <c:forEach var="item" items="${menuItems}">
-                <h2>${item.name}</h2><br/>
-                <h2>${item.price}</h2><br/>
+            <c:forEach var="item" items="${menuList}">
+                <c:out value="${item.name}: ${item.price}" />
             </c:forEach>
         </p>
     </body>
