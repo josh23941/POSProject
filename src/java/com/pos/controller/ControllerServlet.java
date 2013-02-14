@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joshua Miller
  */
-
+//@todo probably shouldn't have hard coded strings here?  Check best practice...Low Priority
 @WebServlet(name = "ControllerServlet", 
     urlPatterns = {
         "/item_input", 
@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletResponse;
         "/", 
         "", 
         "/login",
-        "/verify_login"})
+        "/verify_login",
+        "/POSProject"})
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     
@@ -53,6 +54,8 @@ public class ControllerServlet extends HttpServlet{
         
         String dispatchUrl = null;
         //Get the last part of the URI
+        //@todo is whitespace an issue at end of url ? check this.
+        //@todo when no trailing slash this block fails to work as intended
         String uri = request.getRequestURI();
         int lastSlashIndex = uri.lastIndexOf("/");
         String action = uri.substring(lastSlashIndex + 1);
@@ -116,7 +119,8 @@ public class ControllerServlet extends HttpServlet{
             }
         }
         
-        else if (action.equals("login") || action.equals("") || action.equals("/")){
+        else if (action.equals("login") || action.equals("") || action.equals("/")
+                || action.equals("POSProject")){
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:
