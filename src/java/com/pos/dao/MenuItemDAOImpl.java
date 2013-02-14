@@ -28,6 +28,7 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
 
     @Override
     public List<MenuItem> getMenuItems() throws DAOException {
+        //@todo is arraylist the right structure?  Don't wan't to allow repeats.
         List<MenuItem> menuItems = new ArrayList<MenuItem>();
         Connection connection = null;
         PreparedStatement pStatement = null;
