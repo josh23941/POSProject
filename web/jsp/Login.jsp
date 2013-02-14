@@ -17,10 +17,10 @@
         <div id="global">
             <c:choose>
                 <c:when test="${errorMessage == 'wrong_password'}">
-                    <c:out value="<p style=\"color:red\">Password Is Incorrect.  Try Again</p>"/>
+                    <p style="color:red">Password Is Incorrect</p>
                 </c:when>
                 <c:when test="${errorMessage == 'no_user'}">
-                    <c:out value="<p style=\=color:red\">User does not exist.  Try Again</p>"/>
+                    <p style="color:red">User does not exist.</p>
                 </c:when>
                 <c:otherwise>
                 </c:otherwise>
