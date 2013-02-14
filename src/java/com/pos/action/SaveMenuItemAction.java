@@ -15,8 +15,8 @@ import com.pos.model.MenuItem;
  */
 public class SaveMenuItemAction {
     public void save(MenuItem menuItem){
-        try{
-            MenuItemDAO menuItemDAO = DAOFactory.getMenuItemDAO();
+        MenuItemDAO menuItemDAO = DAOFactory.getMenuItemDAO();
+        try{    
             menuItemDAO.insert(menuItem);
         }catch (DAOException e){
             e.printStackTrace();

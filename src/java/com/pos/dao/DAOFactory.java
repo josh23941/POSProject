@@ -12,4 +12,8 @@ public class DAOFactory {
     public static MenuItemDAO getMenuItemDAO(){
         return new MenuItemDAOImpl();
     }
+    
+    public static LoginDAO getLoginDAO(String username, String password){
+        return new LoginDAOImpl(username, password);
+    }
 }

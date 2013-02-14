@@ -4,7 +4,9 @@
  */
 package com.pos.controller;
 
+import com.pos.action.LoginAction;
 import com.pos.action.SaveMenuItemAction;
+import com.pos.dao.LoginDAO;
 import com.pos.form.MenuItemForm;
 import com.pos.model.Menu;
 import com.pos.model.MenuItem;
@@ -87,12 +89,32 @@ public class ControllerServlet extends HttpServlet{
         }
         
         else if (action.equals("verify_login")){
-            //@todo add verification procedure set
             //ACTION:
+            LoginAction loginAction = new LoginAction(request.getParameter("username"),
+                    request.getParameter("password"));
+            int authenticationResult = loginAction.authenticate();
             //DISPATCH:
+            if(authenticationResult == LoginDAO.Result.PASS){
+                //@todo get and pass organization
+                //@todo create ManagerLanding.jsp & EmployeeLanding.jsp
+                if(loginAction.getRole().equals("manager")){
+                    dispatchUrl = "jsp/ManagerLanding.jsp";
+                }
+                else if(loginAction.getRole().equals("employee")){
+                    dispatchUrl = "jsp/EmployeeLanding.jsp";
+                }
+            }
+            else if (authenticationResult == LoginDAO.Result.WRONG_PASSWORD){
+                request.setAttribute("loginError", "wrong_password");
+                dispatchUrl = "jsp/Login.jsp";
+            }
+            else if (authenticationResult == LoginDAO.Result.NO_USER){
+                request.setAttribute("loginError", "no_user");
+                dispatchUrl = "jsp/Login.jsp";
+            }
         }
         
-        else if (action.equals("login") || action.equals("") || action.equals("login")){
+        else if (action.equals("login") || action.equals("") || action.equals("/")){
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:

@@ -4,6 +4,7 @@
     Author     : Josh
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,8 +15,18 @@
     </head>
     <body>
         <div id="global">
+            <c:choose>
+                <c:when test="${errorMessage == 'wrong_password'}">
+                    <c:out value="<p style=\"color:red\">Password Is Incorrect.  Try Again</p>"/>
+                </c:when>
+                <c:when test="${errorMessage == 'no_user'}">
+                    <c:out value="<p style=\=color:red\">User does not exist.  Try Again</p>"/>
+                </c:when>
+                <c:otherwise>
+                </c:otherwise>
+            </c:choose>
             <h3>Enter Login Credentials</h3>
-            <form method="post" action="login">
+            <form method="post" action="verify_login">
                 <table>
                     <tr>
                         <td>Username:</td>
