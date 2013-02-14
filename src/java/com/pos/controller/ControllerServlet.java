@@ -22,8 +22,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Joshua Miller
  */
 
-@WebServlet(name = "ControllerServlet", urlPatterns = {"/item_input", "/item_save",
-    "/view_items", "/", "", "/login"})
+@WebServlet(name = "ControllerServlet", 
+    urlPatterns = {
+        "/item_input", 
+        "/item_save",
+        "/view_items", 
+        "/", 
+        "", 
+        "/login",
+        "/verify_login"})
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     
@@ -41,16 +48,21 @@ public class ControllerServlet extends HttpServlet{
     
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException{
+        
+        String dispatchUrl = null;
         //Get the last part of the URI
         String uri = request.getRequestURI();
         int lastSlashIndex = uri.lastIndexOf("/");
         String action = uri.substring(lastSlashIndex + 1);
         
         if (action.equals("item_input")){
-            
+            //ACTION:
+            //DISPATCH:
+            dispatchUrl = "jsp/MenuItemForm.jsp";
         }
         
         else if (action.equals("item_save")){
+            //ACTION:
             MenuItemForm menuItemForm = new MenuItemForm();
             menuItemForm.setName(request.getParameter("name"));
             menuItemForm.setPrice(request.getParameter("price"));
@@ -60,30 +72,30 @@ public class ControllerServlet extends HttpServlet{
             SaveMenuItemAction saveMenuItemAction = new SaveMenuItemAction();
             saveMenuItemAction.save(menuItem);
             request.setAttribute("menuItem", menuItem);
-        }
-        
-        else if (action.equals("view_items")){
-            Menu menu = new Menu();
-            menu.refreshMenu();
-            List<MenuItem> menuList = menu.getItems();
-            request.setAttribute("menuList", menuList);
-        }
-        
-        String dispatchUrl = null;
-        
-        if (action.equals("item_input")){
-            dispatchUrl = "jsp/MenuItemForm.jsp";
-        }
-        
-        else if (action.equals("item_save")){
+            //DISPATCH:
             dispatchUrl = "jsp/ItemDetails.jsp";
         }
         
         else if (action.equals("view_items")){
+            //ACTION:
+            Menu menu = new Menu();
+            menu.refreshMenu();
+            List<MenuItem> menuList = menu.getItems();
+            request.setAttribute("menuList", menuList);
+            //DISPATCH:
             dispatchUrl = "jsp/ViewItems.jsp";
         }
         
+        else if (action.equals("verify_login")){
+            //@todo add verification procedure set
+            //ACTION:
+            //DISPATCH:
+        }
+        
         else if (action.equals("login") || action.equals("") || action.equals("login")){
+            //ACTION:
+                //@todo handle those with valid sessions (send right to menu)
+            //DISPATCH:
             dispatchUrl = "jsp/Login.jsp";
         }
         
