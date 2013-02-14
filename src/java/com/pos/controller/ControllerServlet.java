@@ -105,11 +105,13 @@ public class ControllerServlet extends HttpServlet{
                 }
             }
             else if (authenticationResult == LoginDAO.Result.WRONG_PASSWORD){
-                request.setAttribute("loginError", "wrong_password");
+                /*@todo all of these setAttribute()'s should conform to package naming standards
+                ...should be com.pos.controller.errorMessage?...look up best practice*/
+                request.setAttribute("errorMessage", "wrong_password");
                 dispatchUrl = "jsp/Login.jsp";
             }
             else if (authenticationResult == LoginDAO.Result.NO_USER){
-                request.setAttribute("loginError", "no_user");
+                request.setAttribute("errorMessage", "no_user");
                 dispatchUrl = "jsp/Login.jsp";
             }
         }

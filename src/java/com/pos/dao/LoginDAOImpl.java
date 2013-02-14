@@ -13,16 +13,17 @@ import java.sql.SQLException;
  *
  * @author Josh
  */
-public class LoginDAOImpl extends BaseDAO implements LoginDAO{ 
-    private String username;
+public class LoginDAOImpl extends BaseDAO implements LoginDAO{
     private String password;
-    private final String GET_USERS_PASS_SQL = "SELECT password FROM users WHERE username=\"" + username + "\"";
-    private final String GET_USERS_ORGANIZATION_SQL = "SELECT organization FROM users WHERE username=\"" + username + "\""; 
-    private final String GET_USERS_ROLE_SQL = "SELECT role FROM users WHERE username=\"" + username + "\"";
+    private final String GET_USERS_PASS_SQL;
+    private final String GET_USERS_ORGANIZATION_SQL; 
+    private final String GET_USERS_ROLE_SQL;
     
     public LoginDAOImpl(String username, String password){
-        this.username = username;
         this.password = password;
+        GET_USERS_PASS_SQL = "SELECT password FROM users WHERE username=\"" + username + "\"";
+        GET_USERS_ORGANIZATION_SQL = "SELECT organization FROM users WHERE username=\"" + username + "\"";
+        GET_USERS_ROLE_SQL = "SELECT role FROM users WHERE username=\"" + username + "\""; 
     }
     
     @Override
