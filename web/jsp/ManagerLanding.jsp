@@ -12,6 +12,12 @@
         <title>Manager Landing</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Manager Menu</h1>
+        <table> 
+            <tr><td><a href="item_input" class="menuLink">Add Menu Items</a></td></tr>
+            <tr><td><a href="view_items" class="menuLink">View Menu Items</a></td></tr>
+            <tr><td><a href="place_order" class="menuLink">Place Order</a></td></tr>
+            <tr><td><a href="logout" class="menuLink">Log Out</a></td></tr>
+        </table>
     </body>
 </html>

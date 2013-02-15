@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 //@todo probably shouldn't have hard coded strings here?  Check best practice...Low Priority
 @WebServlet(name = "ControllerServlet", 
     urlPatterns = {
+        "/place_order",
+        "/logout",
         "/item_input", 
         "/item_save",
         "/view_items", 
@@ -33,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
         "", 
         "/login",
         "/verify_login",
+        "/POSProject"
         })
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
@@ -59,11 +62,15 @@ public class ControllerServlet extends HttpServlet{
         String uri = request.getRequestURI();
         int lastSlashIndex = uri.lastIndexOf("/");
         String action = uri.substring(lastSlashIndex + 1);
+        
         if(action.equals("POSProject")){
-            action = "";
+            //@todo grab hostname from properties file or somewhere else
+            //shouldn't be hardcoded.
+            response.sendRedirect("http://localhost:8080/POSProject/");
+            
         }
         
-        if (action.equals("item_input")){
+        else if (action.equals("item_input")){
             //ACTION:
             //DISPATCH:
             dispatchUrl = "jsp/MenuItemForm.jsp";
@@ -122,14 +129,27 @@ public class ControllerServlet extends HttpServlet{
             }
         }
         
-        else if (action.equals("login") || action.equals("") || action.equals("/")
-                /*|| action.equals("POSProject")*/){
+        else if (action.equals("login") || action.equals("") || action.equals("/")){
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:
             dispatchUrl = "jsp/Login.jsp";
+            
         }
         
+        else if (action.equals("place_order")){
+            //ACTION:
+            //DISPATCH:
+                //@todo implement jsp/PlaceOrder.jsp
+            dispatchUrl = "jsp/PlaceOrder.jsp";
+        }
+        else if (action.equals("logout")){
+            //ACTION:
+                //@todo kill session 
+            //DISPATCH:
+                //@todo Decide if you want some type of logout specific page
+            dispatchUrl = "jsp/Login.jsp";
+        }
         if(dispatchUrl != null){
             RequestDispatcher rd = request.getRequestDispatcher(dispatchUrl);
             rd.forward(request, response);
