@@ -54,7 +54,7 @@ public class ControllerServlet extends HttpServlet{
         
         String dispatchUrl = null;
         //Get the last part of the URI
-        //@todo is whitespace an issue at end of url ? check this.
+        
         //@todo when no trailing slash this block fails to work as intended
         String uri = request.getRequestURI();
         int lastSlashIndex = uri.lastIndexOf("/");
