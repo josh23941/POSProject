@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
         "", 
         "/login",
         "/verify_login",
-        "/POSProject"})
+        })
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     
@@ -59,6 +59,9 @@ public class ControllerServlet extends HttpServlet{
         String uri = request.getRequestURI();
         int lastSlashIndex = uri.lastIndexOf("/");
         String action = uri.substring(lastSlashIndex + 1);
+        if(action.equals("POSProject")){
+            action = "";
+        }
         
         if (action.equals("item_input")){
             //ACTION:
@@ -120,7 +123,7 @@ public class ControllerServlet extends HttpServlet{
         }
         
         else if (action.equals("login") || action.equals("") || action.equals("/")
-                || action.equals("POSProject")){
+                /*|| action.equals("POSProject")*/){
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:
