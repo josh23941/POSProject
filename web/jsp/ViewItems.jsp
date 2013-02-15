@@ -13,10 +13,20 @@
         <title>View Menu Items</title>
     </head>
     <body>
-        <p>
-            <c:forEach var="item" items="${menuList}">
-                <c:out value="${item.name}: ${item.price}" />
-            </c:forEach>
+        <p style="font-weight: bold">
+            <h2>Menu Item List</h2>
         </p>
+        <table>
+            <tr>
+                <td style="font-weight:bold">Name</td>
+                <td style="font-weight:bold">Price</td>
+            </tr>
+            <c:forEach var="item" items="${menuList}">
+                    <tr>
+                        <td style="padding-right:20px"><c:out value="${item.name}: "/></td>
+                        <td><c:out value="$${item.price}"/></td>
+                    </tr> 
+            </c:forEach>
+        </table>
     </body>
 </html>
