@@ -10,15 +10,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Save Item</title>
-        <style type="text/css">@import url(css/main.css);</style>
+        <style type="text/css">@import url(css/item_table.css);</style>
     </head>
     <body>
         <div id="global">
             <h4>The item has been saved</h4>
             <p>
                 <h5>Details:</h5>
-                Item Name: ${menuItem.name}<br/>
-                Item Price: $${menuItem.price}
+                <table>
+                    <tr><td class="table_header">Item Name</td><td class="table_header">Price</td></tr>
+                    <tr><td>${menuItem.name}</td><td>$${menuItem.price}</td></tr>
+                </table>
             </p>
         </div>
     </body>

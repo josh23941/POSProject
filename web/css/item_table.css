@@ -1,0 +1,17 @@
+/* 
+    Document   : view_items
+    Created on : Feb 15, 2013, 11:01:16 PM
+    Author     : Josh
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.page_header, .table_header{
+    font-weight: bold;
+}
+
+

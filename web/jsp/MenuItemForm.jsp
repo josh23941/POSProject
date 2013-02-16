@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Menu Item Form</title>
-        <style type="text/css">@import url(css/main.css);</style>
+        
     </head>
     <body>
         <div id="global">
