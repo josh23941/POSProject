@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
         "", 
         "/login",
         "/verify_login",
-        "/POSProject"
+        "/POSProject",
         })
 public class ControllerServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
@@ -150,6 +150,8 @@ public class ControllerServlet extends HttpServlet{
                 //@todo Decide if you want some type of logout specific page
             dispatchUrl = "jsp/Login.jsp";
         }
+        
+        
         if(dispatchUrl != null){
             RequestDispatcher rd = request.getRequestDispatcher(dispatchUrl);
             rd.forward(request, response);
