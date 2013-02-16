@@ -121,11 +121,11 @@ public class ControllerServlet extends HttpServlet{
                 /*@todo all of these setAttribute()'s should conform to package naming standards
                 ...should be com.pos.controller.errorMessage?...look up best practice*/
                 request.setAttribute("errorMessage", "wrong_password");
-                dispatchUrl = "jsp/Login.jsp";
+                dispatchUrl = "jsp/LoginPage.jsp";
             }
             else if (authenticationResult == LoginDAO.Result.NO_USER){
                 request.setAttribute("errorMessage", "no_user");
-                dispatchUrl = "jsp/Login.jsp";
+                dispatchUrl = "jsp/LoginPage.jsp";
             }
         }
         
@@ -133,7 +133,7 @@ public class ControllerServlet extends HttpServlet{
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:
-            dispatchUrl = "jsp/Login.jsp";
+            dispatchUrl = "jsp/LoginPage.jsp";
             
         }
         
@@ -148,7 +148,7 @@ public class ControllerServlet extends HttpServlet{
                 //@todo kill session 
             //DISPATCH:
                 //@todo Decide if you want some type of logout specific page
-            dispatchUrl = "jsp/Login.jsp";
+            dispatchUrl = "jsp/LoginPage.jsp";
         }
         
         
