@@ -11,16 +11,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>POS Login</title>
-        <style type="text/css">@import url(css/main.css);</style>
+        <style type="text/css">@import url(css/login.css);</style>
     </head>
     <body>
         <div id="global">
             <c:choose>
                 <c:when test="${errorMessage == 'wrong_password'}">
-                    <c:out value="<p style=\"color:red\">Password Is Incorrect.  Try Again</p>"/>
+                    <p class="error">Password Is Incorrect.  Try Again</p>"/>
                 </c:when>
                 <c:when test="${errorMessage == 'no_user'}">
-                    <c:out value="<p style=\=color:red\">User does not exist.  Try Again</p>"/>
+                    <p class="error">User does not exist.  Try Again</p>"/>
                 </c:when>
                 <c:otherwise>
                 </c:otherwise>
