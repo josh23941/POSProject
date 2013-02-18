@@ -75,7 +75,7 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("item_input")){
             //ACTION:
             //DISPATCH:
-            dispatchUrl = "jsp/MenuItemForm.jsp";
+            dispatchUrl = "jsp/forms/MenuItemForm.jsp";
         }
         
         else if (action.equals("item_save")){
@@ -90,7 +90,7 @@ public class ControllerServlet extends HttpServlet{
             menuItemAction.save(menuItem);
             request.setAttribute("menuItem", menuItem);
             //DISPATCH:
-            dispatchUrl = "jsp/ItemDetails.jsp";
+            dispatchUrl = "jsp/dbViews/ItemDetails.jsp";
         }
         
         else if (action.equals("view_items")){
@@ -99,7 +99,7 @@ public class ControllerServlet extends HttpServlet{
             List<MenuItem> menuList = menuItemAction.getMenuItems();
             request.setAttribute("menuList", menuList);
             //DISPATCH:
-            dispatchUrl = "jsp/ViewItems.jsp";
+            dispatchUrl = "jsp/dbViews/ViewItems.jsp";
         }
         
         else if (action.equals("verify_login")){
@@ -113,21 +113,21 @@ public class ControllerServlet extends HttpServlet{
             if(authenticationResult == UserDAO.Result.PASS){
                 //@todo get and pass organization
                 if(user.getRole().equals("manager")){
-                    dispatchUrl = "jsp/ManagerLanding.jsp";
+                    dispatchUrl = "jsp/landings/ManagerLanding.jsp";
                 }
                 else if(user.getRole().equals("employee")){
-                    dispatchUrl = "jsp/EmployeeLanding.jsp";
+                    dispatchUrl = "jsp/landings/EmployeeLanding.jsp";
                 }
             }
             else if (authenticationResult == UserDAO.Result.WRONG_PASSWORD){
                 /*@todo all of these setAttribute()'s should conform to package naming standards
                 ...should be com.pos.controller.errorMessage?...look up best practice*/
                 request.setAttribute("errorMessage", "wrong_password");
-                dispatchUrl = "jsp/LoginPage.jsp";
+                dispatchUrl = "jsp/forms/LoginForm.jsp";
             }
             else if (authenticationResult == UserDAO.Result.NO_USER){
                 request.setAttribute("errorMessage", "no_user");
-                dispatchUrl = "jsp/LoginPage.jsp";
+                dispatchUrl = "jsp/forms/LoginForm.jsp";
             }
         }
         
@@ -135,7 +135,7 @@ public class ControllerServlet extends HttpServlet{
             //ACTION:
                 //@todo handle those with valid sessions (send right to menu)
             //DISPATCH:
-            dispatchUrl = "jsp/LoginPage.jsp";
+            dispatchUrl = "jsp/forms/LoginForm.jsp";
             
         }
         
@@ -151,13 +151,13 @@ public class ControllerServlet extends HttpServlet{
                 //@todo kill session 
             //DISPATCH:
                 //@todo Decide if you want some type of logout specific page
-            dispatchUrl = "jsp/LoginPage.jsp";
+            dispatchUrl = "jsp/forms/LoginForm.jsp";
         }
         
         else if (action.equals("add_employee")){
             //ACTION:  
             //DISPATCH:
-            dispatchUrl = "jsp/AddUserForm.jsp";
+            dispatchUrl = "jsp/forms/AddUserForm.jsp";
         }
         
         else if (action.equals("user_save")){
@@ -178,7 +178,7 @@ public class ControllerServlet extends HttpServlet{
             userAction.addUser(user);
             request.setAttribute("user", user);
             //DISPATCH:
-            dispatchUrl = "jsp/UserDetails.jsp";
+            dispatchUrl = "jsp/dbViews/UserDetails.jsp";
         }
         
         else if (action.equals("view_users")){
@@ -187,7 +187,7 @@ public class ControllerServlet extends HttpServlet{
             List<User> userList = userAction.getUsers();
             request.setAttribute("userList", userList);
             //DISPATCH:
-            dispatchUrl = "jsp/ViewUsers.jsp";
+            dispatchUrl = "jsp/dbViews/ViewUsers.jsp";
         }
         
         if(dispatchUrl != null){
