@@ -9,7 +9,6 @@ import com.pos.action.MenuItemAction;
 import com.pos.dao.UserDAO;
 import com.pos.form.MenuItemForm;
 import com.pos.form.UserForm;
-import com.pos.model.Menu;
 import com.pos.model.MenuItem;
 import com.pos.model.User;
 import java.io.IOException;
@@ -106,7 +105,7 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("verify_login")){
             //ACTION:
             UserAction userAction = new UserAction();
-            User user = new User();
+            User user;
             user = userAction.getUser(request.getParameter("username"));
             int authenticationResult = userAction.authenticate(request.getParameter("username"),
                     request.getParameter("password"));

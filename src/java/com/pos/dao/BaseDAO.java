@@ -14,13 +14,14 @@ import javax.sql.DataSource;
  * @author Josh
  */
 public class BaseDAO implements DAO{
+    
+    @Override
     public Connection getConnection() throws DAOException{
         DataSource dataSource = DataSourceCache.getInstance().getDataSource();
         try{
             return dataSource.getConnection();
         } catch(Exception e){
-            e.printStackTrace();
-            throw new DAOException();
+            throw new DAOException("Error getting connection: " + e.getMessage());
         }
         
     }
@@ -30,18 +31,22 @@ public class BaseDAO implements DAO{
         if (resultSet != null){
             try{
                 resultSet.close();    
-            } catch(Exception e){}
+            } catch(Exception e){
+                System.out.println("Error closing result set: " + e.getMessage());
+            }
         }
         if (statement != null) {
             try{
                 statement.close();
-            }catch (Exception e){}
+            }catch (Exception e){
+                System.out.println("Error closing prepared statement: " + e.getMessage());
+            }
         }
         if (connection != null){
             try{
                 connection.close();
             }catch (Exception e){
-                
+                System.out.println("Error closing connection: " + e.getMessage());
             }
         }
     }
