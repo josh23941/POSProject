@@ -13,7 +13,12 @@ public class DAOFactory {
         return new MenuItemDAOImpl();
     }
     
-    public static LoginDAO getLoginDAO(String username, String password){
-        return new LoginDAOImpl(username, password);
+    public static UserDAO getUserDAO(String username, String password){
+        return new UserDAOImpl(username, password);
+    }
+    
+    //@todo get rid of the other version of this soon.
+    public static UserDAO getUserDAO(){
+        return new UserDAOImpl();
     }
 }

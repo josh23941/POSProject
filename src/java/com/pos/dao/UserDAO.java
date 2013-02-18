@@ -4,11 +4,14 @@
  */
 package com.pos.dao;
 
+import com.pos.model.User;
+import java.util.List;
+
 /**
  *
  * @author Josh
  */
-public interface LoginDAO {
+public interface UserDAO {
     
     public class Result{
         public static final int PASS = 0;
@@ -19,4 +22,6 @@ public interface LoginDAO {
     public int authenticate() throws DAOException;
     public String getOrganization() throws DAOException;
     public String getRole() throws DAOException;
+    public List<User> getUsers() throws DAOException;
+    public void addUser(User user) throws DAOException;
 }

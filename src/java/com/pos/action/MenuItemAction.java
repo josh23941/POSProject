@@ -14,9 +14,22 @@ import java.util.List;
  *
  * @author Josh
  */
-public class GetMenuItemsAction {
+public class MenuItemAction {
+    
+    private MenuItemDAO menuItemDAO;
+    
+    public MenuItemAction(){
+        menuItemDAO = DAOFactory.getMenuItemDAO();
+    }
+    public void save(MenuItem menuItem){
+        try{    
+            menuItemDAO.insert(menuItem);
+        }catch (DAOException e){
+            
+        }
+    }
+    
     public List<MenuItem> getMenuItems(){
-        MenuItemDAO menuItemDAO = DAOFactory.getMenuItemDAO();
         List<MenuItem> menuItems = null;
         try{
             menuItems = menuItemDAO.getMenuItems();

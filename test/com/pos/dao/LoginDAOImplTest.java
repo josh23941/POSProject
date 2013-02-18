@@ -11,7 +11,7 @@ import junit.framework.TestCase;
  * @author Josh
  */
 public class LoginDAOImplTest extends TestCase {
-    LoginDAOImpl instance = (LoginDAOImpl)DAOFactory.getLoginDAO("root", "root");
+    UserDAOImpl instance = (UserDAOImpl)DAOFactory.getUserDAO("root", "root");
     
     public LoginDAOImplTest(String testName) {
         super(testName);
@@ -19,7 +19,7 @@ public class LoginDAOImplTest extends TestCase {
     
     @Override
     protected void setUp() throws Exception {
-        LoginDAOImpl instance = (LoginDAOImpl)DAOFactory.getLoginDAO("root", "root");
+        UserDAOImpl instance = (UserDAOImpl)DAOFactory.getUserDAO("root", "root");
     }
     
     @Override
@@ -32,7 +32,7 @@ public class LoginDAOImplTest extends TestCase {
      */
     public void testAuthenticate() throws Exception {
         System.out.println("authenticate");
-        int expResult = LoginDAO.Result.PASS;
+        int expResult = UserDAO.Result.PASS;
         int result = instance.authenticate();
         assertEquals(expResult, result);
     }

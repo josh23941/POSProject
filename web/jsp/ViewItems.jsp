@@ -14,9 +14,7 @@
         <style type="text/css">@import url(css/item_table.css)</style>
     </head>
     <body>
-        <p class="page_header">
-            <h2>Menu Item List</h2>
-        </p>
+        <h2><p class="page_header">Menu Item List</p></h2>
         <table>
             <tr>
                 <td class="table_header">Item Name</td>
