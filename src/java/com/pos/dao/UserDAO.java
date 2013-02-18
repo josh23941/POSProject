@@ -19,9 +19,8 @@ public interface UserDAO {
         public static final int WRONG_PASSWORD = 2;
     }
     
-    public int authenticate() throws DAOException;
-    public String getOrganization() throws DAOException;
-    public String getRole() throws DAOException;
+    public int authenticate(String username, String password) throws DAOException;
     public List<User> getUsers() throws DAOException;
     public void addUser(User user) throws DAOException;
+    public User getUser(String username) throws DAOException;
 }

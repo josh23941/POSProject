@@ -105,17 +105,18 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("verify_login")){
             //ACTION:
-            UserAction userAction = new UserAction(request.getParameter("username"),
+            UserAction userAction = new UserAction();
+            User user = new User();
+            user = userAction.getUser(request.getParameter("username"));
+            int authenticationResult = userAction.authenticate(request.getParameter("username"),
                     request.getParameter("password"));
-            int authenticationResult = userAction.authenticate();
             //DISPATCH:
             if(authenticationResult == UserDAO.Result.PASS){
                 //@todo get and pass organization
-                //@todo create ManagerLanding.jsp & EmployeeLanding.jsp
-                if(userAction.getRole().equals("manager")){
+                if(user.getRole().equals("manager")){
                     dispatchUrl = "jsp/ManagerLanding.jsp";
                 }
-                else if(userAction.getRole().equals("employee")){
+                else if(user.getRole().equals("employee")){
                     dispatchUrl = "jsp/EmployeeLanding.jsp";
                 }
             }

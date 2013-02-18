@@ -19,49 +19,20 @@ import java.util.List;
 
 //@todo excpetion should actually do something when caught...this is a todo for the whole project.
 public class UserAction {
-    private String username;
-    private String password;
     private UserDAO userDAO;
-    
-    //@todo you aren't even using the instance vars...plus don't need to store user and pass here.  See other todo on this.
-    public UserAction(String username, String password){
-        this.username = username;
-        this.password = password;
-        userDAO = DAOFactory.getUserDAO(username, password);
-    }
     
     public UserAction(){
         userDAO = DAOFactory.getUserDAO();
     }
-    public int authenticate(){
+    
+    public int authenticate(String username, String password){
         int result = UserDAO.Result.NO_USER;
         try{
-            result = userDAO.authenticate();
+            result = userDAO.authenticate(username, password);
         }catch(DAOException e){
-            e.getMessage();
+            System.out.println("DB error during authentication " + e.getMessage());
         }
         return result;
-    }
-    
-    public String getOrganization(){
-        String organization = null;
-        try{
-            organization = userDAO.getOrganization();
-        }
-        catch(DAOException e){
-            e.getMessage();
-        }
-        return organization;
-    }
-    
-    public String getRole(){
-        String role = null;
-        try{
-            role = userDAO.getRole();
-        }catch(DAOException e){
-            e.getMessage();
-        }
-        return role;
     }
     
     public List<User> getUsers(){
@@ -69,7 +40,7 @@ public class UserAction {
         try{
             userList = userDAO.getUsers();
         }catch(DAOException e){
-            e.getMessage();
+            System.out.println("DB Error getting users " + e.getMessage());
         }
         return userList;
     }
@@ -78,7 +49,17 @@ public class UserAction {
         try{
             userDAO.addUser(user);
         }catch(DAOException e){
-            System.out.println("Error Adding User" + e.getMessage());
+            System.out.println("DB Error Adding User" + e.getMessage());
         }
+    }
+    
+    public User getUser(String username){
+        User user = new User();
+        try{
+            user = userDAO.getUser(username);
+        }catch(DAOException e){
+            System.out.println("DB Error getting user " + e.getMessage());
+        }
+        return user;
     }
 }
