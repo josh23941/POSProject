@@ -27,6 +27,8 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
     private static final String GET_UID_BY_NAME_SQL_BASE = "SELECT uid FROM menucategories " +
             "WHERE name="; 
     private static final String GET_MENU_CATEGORIES_SQL = "SELECT * FROM menucategories";
+    private static final String INSERT_CATEGORY_CATEGORIES_SQL = "INSERT INTO category_categories " +
+            "(parent_cat, child_cat) VALUES (?, ?)";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -86,6 +88,19 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
             pStatement = connection.prepareStatement(INSERT_MENU_CATEGORY_SQL);
             pStatement.setString(1, menuCategory.getName());
             pStatement.setInt(2, parentUID);
+            pStatement.execute();
+            resultSet.close();
+            pStatement.close();
+            String thisCategoryUIDsql = GET_UID_BY_NAME_SQL_BASE + "\"" + menuCategory.getName() + "\"";
+            pStatement = connection.prepareStatement(thisCategoryUIDsql);
+            resultSet = pStatement.executeQuery();
+            resultSet.next();
+            int thisCategoryUID = resultSet.getInt("uid");
+            resultSet.close();
+            pStatement.close();
+            pStatement = connection.prepareStatement(INSERT_CATEGORY_CATEGORIES_SQL);
+            pStatement.setInt(1, parentUID);
+            pStatement.setInt(2, thisCategoryUID);
             pStatement.execute();
         }catch(SQLException e){
             throw new DAOException("Error inserting menu category: " + e.getMessage());
