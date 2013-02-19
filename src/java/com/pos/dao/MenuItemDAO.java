@@ -14,7 +14,7 @@ import com.pos.model.menu.MenuItem;
  */
 public interface MenuItemDAO extends DAO{
     public List<MenuItem> getMenuItems() throws DAOException;
-    public void insert(MenuItem menuItem) throws DAOException;
+    public void saveMenuItem(MenuItem menuItem) throws DAOException;
     public void saveMenuCategory(MenuCategory menuCategory) throws DAOException;
     public List<MenuCategory> getMenuCategories() throws DAOException;
 }

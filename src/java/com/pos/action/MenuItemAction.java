@@ -24,7 +24,7 @@ public class MenuItemAction {
     }
     public void saveMenuItem(MenuItem menuItem){
         try{    
-            menuItemDAO.insert(menuItem);
+            menuItemDAO.saveMenuItem(menuItem);
         }catch (DAOException e){
             System.out.println(e.getMessage());
         }

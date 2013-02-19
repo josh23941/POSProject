@@ -3,7 +3,7 @@
     Created on : Feb 11, 2013, 4:50:10 PM
     Author     : Josh
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,16 +24,21 @@
                     <tr>
                         <td>Price: </td>
                         <td><input type="text" name="price"/></td>
-                        <td><input type="reset"/></td>
-                        <td><input type="submit" value="Add Item"/></td>
                     </tr>
                     <tr>
                         <td>Category: </td>
                         <td>
                             <select name="category">
                                 <!-- JSP pulls categories in here -->
+                                <c:forEach var="category" items="${menuCategoryList}">
+                                    <option value="${category.uid}">${category.name}</option>
+                                </c:forEach>
                             </select>
                         </td>
+                    </tr>
+                    <tr>
+                        <td><input type="reset"/></td>
+                        <td><input type="submit" value="Add Item"/></td>
                     </tr>
                 </table>
             </form>

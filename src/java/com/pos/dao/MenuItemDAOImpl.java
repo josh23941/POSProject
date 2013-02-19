@@ -21,7 +21,7 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
     private static final String GET_MENU_ITEMS_SQL = 
             "SELECT name, price, category_uid FROM menuitems";
     private static final String INSERT_MENU_ITEM_SQL = "INSERT INTO menuitems " + 
-            "(name, price, category_uid) VALUES (?, ?)";
+            "(name, price, category_uid) VALUES (?, ?, ?)";
     private static final String INSERT_MENU_CATEGORY_SQL = "INSERT INTO menucategories " +
             "(name, parent_uid) VALUES (?, ?)";
     private static final String GET_UID_BY_NAME_SQL_BASE = "SELECT uid FROM menucategories " +
@@ -48,7 +48,7 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
                 MenuItem menuItem = new MenuItem();
                 menuItem.setName(resultSet.getString("name"));
                 menuItem.setPrice(resultSet.getFloat("price"));
-                menuItem.setSubmenuUID(resultSet.getInt("category_uid"));
+                menuItem.setCategoryUID(resultSet.getInt("category_uid"));
                 menuItems.add(menuItem);
             }
         }catch (SQLException e){
@@ -61,13 +61,13 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
     
 
     @Override
-    public void insert(MenuItem menuItem) throws DAOException {
+    public void saveMenuItem(MenuItem menuItem) throws DAOException {
         try{
             connection = getConnection();
             pStatement = connection.prepareStatement(INSERT_MENU_ITEM_SQL);
             pStatement.setString(1, menuItem.getName());
             pStatement.setFloat(2, menuItem.getPrice());
-            pStatement.setInt(3, menuItem.getSubmenuUID());
+            pStatement.setInt(3, menuItem.getCategoryUID());
             pStatement.execute();
         }catch (SQLException e){
             throw new DAOException("Error adding menu item. " + e.getMessage());

@@ -14,7 +14,7 @@ public class MenuItem {
     
     private String name;
     private float price;
-    private int submenuUID;
+    private int categoryUID;
     
     public MenuItem(){}
     
@@ -34,12 +34,12 @@ public class MenuItem {
         price = p;
     }
 
-    public int getSubmenuUID() {
-        return submenuUID;
+    public int getCategoryUID() {
+        return categoryUID;
     }
 
-    public void setSubmenuUID(int submenuUID) {
-        this.submenuUID = submenuUID;
+    public void setCategoryUID(int categoryUID) {
+        this.categoryUID = categoryUID;
     }
     
     

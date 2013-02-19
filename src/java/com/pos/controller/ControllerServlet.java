@@ -76,6 +76,9 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("item_input")){
             //ACTION:
+            MenuItemAction menuItemAction = new MenuItemAction();
+            List<MenuCategory> menuCategoryList = menuItemAction.getMenuCategories();
+            request.setAttribute("menuCategoryList", menuCategoryList);
             //DISPATCH:
             dispatchUrl = "jsp/forms/MenuItemForm.jsp";
         }
@@ -85,7 +88,7 @@ public class ControllerServlet extends HttpServlet{
             MenuItemForm menuItemForm = new MenuItemForm();
             menuItemForm.setName(request.getParameter("name"));
             menuItemForm.setPrice(request.getParameter("price"));
-            menuItemForm.setCategory_uid(request.getParameter("category"));
+            menuItemForm.setCategoryUID(request.getParameter("category"));
             MenuItem menuItem = menuItemForm.getMenuItemInstance();
             MenuItemAction menuItemAction = new MenuItemAction();
             menuItemAction.saveMenuItem(menuItem);
