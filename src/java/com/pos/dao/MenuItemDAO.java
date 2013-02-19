@@ -4,6 +4,7 @@
  */
 package com.pos.dao;
 
+import com.pos.model.menu.MenuCategory;
 import java.util.List;
 import com.pos.model.menu.MenuItem;
 
@@ -12,6 +13,8 @@ import com.pos.model.menu.MenuItem;
  * @author Josh
  */
 public interface MenuItemDAO extends DAO{
-    List<MenuItem> getMenuItems() throws DAOException;
-    void insert(MenuItem menuItem) throws DAOException;
+    public List<MenuItem> getMenuItems() throws DAOException;
+    public void insert(MenuItem menuItem) throws DAOException;
+    public void saveMenuCategory(MenuCategory menuCategory) throws DAOException;
+    public List<MenuCategory> getMenuCategories() throws DAOException;
 }

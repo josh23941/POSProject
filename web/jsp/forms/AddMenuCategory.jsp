@@ -4,6 +4,7 @@
     Author     : Josh
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,18 +14,26 @@
     </head>
     <body>
         <h2><p>Add Menu Category</p></h2>
-        <form action="add_menu_category" method="post">
+        <form action="save_category" method="post">
             <table>
                 <tr>
                     <td>Category Name: </td>
-                    <td><input type="text" name="categoryName"/></td>
+                    <td><input type="text" name="name"/></td>
                 </tr>
                 <tr>
                     <td>Parent Category: </td>
                     <td>
                         <select name="parent">
-                            <!-- JSP grabs options from the submenu table -->
+                            <!-- JSP grabs options from the category table -->
+                            <c:forEach var="category" items="${menuCategoryList}">
+                                <option value="${category.name}">${category.name}</option>
+                            </c:forEach>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Add Menu Category"/>
                     </td>
                 </tr>
             </table>

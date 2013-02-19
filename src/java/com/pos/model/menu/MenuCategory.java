@@ -10,16 +10,18 @@ import java.util.List;
  *
  * @author Josh
  */
-public class SubMenu {
+public class MenuCategory {
+    //@todo review if I will use all of these vars.
     private int uid;
-    private SubMenu parent;
-    private List<SubMenu> childeren;
+    //private MenuCategory parent;
+    private String parent;
+    private List<MenuCategory> childeren;
     private List<MenuItem> items;
     private String name;
             
-    public SubMenu(){}
+    public MenuCategory(){}
 
-    public List<SubMenu> getChilderen() {
+    public List<MenuCategory> getChilderen() {
         return childeren;
     }
 
@@ -30,16 +32,20 @@ public class SubMenu {
     public String getName() {
         return name;
     }
-
-    public SubMenu getParent() {
+    /*
+    public MenuCategory getParent() {
         return parent;
     }
-
+    */
+    public String getParent(){
+        return parent;
+    }
+    
     public int getUid() {
         return uid;
     }
 
-    public void setChilderen(List<SubMenu> childeren) {
+    public void setChilderen(List<MenuCategory> childeren) {
         this.childeren = childeren;
     }
 
@@ -51,7 +57,7 @@ public class SubMenu {
         this.name = name;
     }
 
-    public void setParent(SubMenu parent) {
+    public void setParent(String parent) {
         this.parent = parent;
     }
     

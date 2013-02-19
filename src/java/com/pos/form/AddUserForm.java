@@ -2,17 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pos.model;
+package com.pos.form;
+
+import com.pos.model.user.User;
 
 /**
  *
  * @author Josh
  */
-public class User {
+public class AddUserForm {
     private String name;
     private String password;
     private String organization;
     private String role;
+    
+    public AddUserForm(){}
     
     public void setName(String name) {
         this.name = name;
@@ -30,8 +34,6 @@ public class User {
         this.role = role;
     }
     
-    public User(){}
-
     public String getName() {
         return name;
     }
@@ -48,5 +50,14 @@ public class User {
         return role;
     }
     
-    
+    //This really isn't needed yet but if any request parameters are added that aren't Strings then this will be required.
+    public User getUserInstance(){
+        User user = new User();
+        user.setName(name);
+        user.setOrganization(organization);
+        user.setPassword(password);
+        user.setRole(role);
+        return user;
+    }
 }
+

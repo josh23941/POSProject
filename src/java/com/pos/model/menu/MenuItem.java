@@ -10,11 +10,11 @@ import java.io.Serializable;
  *
  * @author Josh
  */
-public class MenuItem implements Serializable{
+public class MenuItem {
     
-    private static final long serialVersionUID = 0L;
     private String name;
     private float price;
+    private int submenuUID;
     
     public MenuItem(){}
     
@@ -33,4 +33,14 @@ public class MenuItem implements Serializable{
     public void setPrice(float p){
         price = p;
     }
+
+    public int getSubmenuUID() {
+        return submenuUID;
+    }
+
+    public void setSubmenuUID(int submenuUID) {
+        this.submenuUID = submenuUID;
+    }
+    
+    
 }

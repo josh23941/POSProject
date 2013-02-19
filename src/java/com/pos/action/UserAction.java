@@ -30,7 +30,7 @@ public class UserAction {
         try{
             result = userDAO.authenticate(username, password);
         }catch(DAOException e){
-            System.out.println("DB error during authentication " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return result;
     }
@@ -40,7 +40,7 @@ public class UserAction {
         try{
             userList = userDAO.getUsers();
         }catch(DAOException e){
-            System.out.println("DB Error getting users " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return userList;
     }
@@ -49,7 +49,7 @@ public class UserAction {
         try{
             userDAO.addUser(user);
         }catch(DAOException e){
-            System.out.println("DB Error Adding User" + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
     
@@ -58,7 +58,7 @@ public class UserAction {
         try{
             user = userDAO.getUser(username);
         }catch(DAOException e){
-            System.out.println("DB Error getting user " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return user;
     }

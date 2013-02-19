@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Menu{
     
-    private List<SubMenu> subMenus;
+    private List<MenuCategory> subMenus;
     private List<MenuItem> items;
     public Menu(){
         

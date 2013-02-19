@@ -8,7 +8,9 @@ import com.pos.action.UserAction;
 import com.pos.action.MenuItemAction;
 import com.pos.dao.UserDAO;
 import com.pos.form.MenuItemForm;
-import com.pos.form.UserForm;
+import com.pos.form.AddUserForm;
+import com.pos.form.MenuCategoryForm;
+import com.pos.model.menu.MenuCategory;
 import com.pos.model.menu.MenuItem;
 import com.pos.model.user.User;
 import java.io.IOException;
@@ -83,11 +85,10 @@ public class ControllerServlet extends HttpServlet{
             MenuItemForm menuItemForm = new MenuItemForm();
             menuItemForm.setName(request.getParameter("name"));
             menuItemForm.setPrice(request.getParameter("price"));
-            MenuItem menuItem = new MenuItem();
-            menuItem.setName(request.getParameter("name"));
-            menuItem.setPrice(Float.parseFloat(request.getParameter("price")));
+            menuItemForm.setCategory_uid(request.getParameter("category"));
+            MenuItem menuItem = menuItemForm.getMenuItemInstance();
             MenuItemAction menuItemAction = new MenuItemAction();
-            menuItemAction.save(menuItem);
+            menuItemAction.saveMenuItem(menuItem);
             request.setAttribute("menuItem", menuItem);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/ItemDetails.jsp";
@@ -162,18 +163,13 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("user_save")){
             //ACTION:
-            UserForm userForm = new UserForm();
+            AddUserForm userForm = new AddUserForm();
             userForm.setName(request.getParameter("name"));
             userForm.setPassword(request.getParameter("password"));
             userForm.setOrganization(request.getParameter("organization"));
             userForm.setRole(request.getParameter("role"));
             //@todo auto set org here depending on the manager's org for now its just setting so field is NN in DB.
-            User user = new User();
-            //@todo might be better to have UserForm and other patterns like this contain method to spit out User instead of constructing both here.
-            user.setName(request.getParameter("name"));
-            user.setPassword(request.getParameter("password"));
-            user.setOrganization(request.getParameter("organization"));
-            user.setRole("role");
+            User user = userForm.getUserInstance();
             UserAction userAction = new UserAction();
             userAction.addUser(user);
             request.setAttribute("user", user);
@@ -188,6 +184,29 @@ public class ControllerServlet extends HttpServlet{
             request.setAttribute("userList", userList);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/ViewUsers.jsp";
+        }
+        
+        else if (action.equals("add_category")){
+            //ACTION:
+            MenuItemAction menuItemAction = new MenuItemAction();
+            List<MenuCategory> menuCategoryList = menuItemAction.getMenuCategories();
+            request.setAttribute("menuCategoryList", menuCategoryList);
+            //DISPATCH:
+            dispatchUrl = "jsp/forms/AddMenuCategory.jsp";
+        }
+        
+        else if (action.equals("save_category")){
+            //ACTION:
+            MenuCategoryForm menuCategoryForm = new MenuCategoryForm();
+            menuCategoryForm.setName(request.getParameter("name"));
+            menuCategoryForm.setParent(request.getParameter("parent"));
+            MenuCategory menuCategory = menuCategoryForm.getMenuCategoryInstance();
+            MenuItemAction menuItemAction = new MenuItemAction();
+            menuItemAction.saveMenuCategory(menuCategory);
+            //@todo Might need Form > Model conversion here if non-string parameters become involved.
+            request.setAttribute("menuCategory", menuCategory);
+            //DISPATCH:
+            dispatchUrl = "jsp/dbViews/CategoryDetails.jsp";
         }
         
         if(dispatchUrl != null){

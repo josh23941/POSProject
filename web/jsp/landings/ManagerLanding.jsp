@@ -13,7 +13,8 @@
     </head>
     <body>
         <h1>Manager Menu</h1>
-        <table> 
+        <table>
+            <tr><td><a href="add_category" class="menuLink">Add Menu Category</a></td></tr>
             <tr><td><a href="item_input" class="menuLink">Add Menu Items</a></td></tr>
             <tr><td><a href="view_items" class="menuLink">View Menu Items</a></td></tr>
             <tr><td><a href="add_employee" class="menuLink">Add Employee</a></td></tr>
