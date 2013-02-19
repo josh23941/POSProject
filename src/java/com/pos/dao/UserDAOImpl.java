@@ -4,7 +4,7 @@
  */
 package com.pos.dao;
 
-import com.pos.model.User;
+import com.pos.model.user.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

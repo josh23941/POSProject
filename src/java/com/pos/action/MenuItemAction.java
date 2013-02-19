@@ -7,7 +7,7 @@ package com.pos.action;
 import com.pos.dao.DAOException;
 import com.pos.dao.DAOFactory;
 import com.pos.dao.MenuItemDAO;
-import com.pos.model.MenuItem;
+import com.pos.model.menu.MenuItem;
 import java.util.List;
 
 /**

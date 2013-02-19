@@ -5,7 +5,7 @@
 package com.pos.dao;
 
 import java.util.List;
-import com.pos.model.MenuItem;
+import com.pos.model.menu.MenuItem;
 
 /**
  *

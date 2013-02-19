@@ -7,7 +7,7 @@ package com.pos.action;
 import com.pos.dao.DAOException;
 import com.pos.dao.DAOFactory;
 import com.pos.dao.UserDAO;
-import com.pos.model.User;
+import com.pos.model.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
