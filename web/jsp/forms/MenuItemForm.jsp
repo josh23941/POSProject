@@ -18,15 +18,23 @@
             <form method="post" action="item_save">
                 <table>
                     <tr>
-                        <td>Item Name:</td>
+                        <td>Item Name: </td>
                         <td><input type="text" name="name"/></td>
                     </tr>
                     <tr>
-                        <td>Price:</td>
+                        <td>Price: </td>
                         <td><input type="text" name="price"/></td>
                         <td><input type="reset"/></td>
                         <td><input type="submit" value="Add Item"/></td>
-                    </tr> 
+                    </tr>
+                    <tr>
+                        <td>Category: </td>
+                        <td>
+                            <select name="category">
+                                <!-- JSP pulls categories in here -->
+                            </select>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </div>
