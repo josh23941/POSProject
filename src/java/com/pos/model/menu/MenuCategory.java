@@ -20,7 +20,13 @@ public class MenuCategory {
     private String name;
             
     public MenuCategory(){}
-
+    
+    //This used for creating rootNode since it isn't in DB
+    public MenuCategory(int uid, String name){
+        this.uid = uid;
+        this.name = name;
+    }
+    
     public List<MenuCategory> getChilderen() {
         return childeren;
     }

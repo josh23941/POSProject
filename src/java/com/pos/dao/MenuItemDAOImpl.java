@@ -31,12 +31,19 @@ public class MenuItemDAOImpl extends BaseDAO implements MenuItemDAO {
     }
 
     @Override
-    public List<MenuItem> getMenuItems() throws DAOException {
+    public List<MenuItem> getMenuItems(String category) throws DAOException {
         //@todo is arraylist the right structure?  Don't wan't to allow repeats.
+        String sql = null;
+        if (category.equals("all")){
+            sql = GET_MENU_ITEMS_SQL;
+        }
+        else{
+            sql = GET_MENU_ITEMS_SQL + " WHERE category_uid=" + category;
+        }
         List<MenuItem> menuItems = new ArrayList<MenuItem>();    
         try{
             connection = getConnection();
-            pStatement = connection.prepareStatement(GET_MENU_ITEMS_SQL);
+            pStatement = connection.prepareStatement(sql);
             resultSet = pStatement.executeQuery();
             while (resultSet.next()){
                 MenuItem menuItem = new MenuItem();

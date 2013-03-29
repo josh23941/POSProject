@@ -30,10 +30,10 @@ public class MenuItemAction {
         }
     }
     
-    public List<MenuItem> getMenuItems(){
+    public List<MenuItem> getMenuItems(String category){
         List<MenuItem> menuItems = null;
         try{
-            menuItems = menuItemDAO.getMenuItems();
+            menuItems = menuItemDAO.getMenuItems(category);
         }catch (DAOException e) {
             System.out.println(e.getMessage());
         }

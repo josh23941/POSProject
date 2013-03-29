@@ -13,7 +13,6 @@ import com.pos.model.menu.MenuItem;
  * @author Josh
  */
 public interface MenuItemDAO extends DAO{
-    public List<MenuItem> getMenuItems() throws DAOException;
+    public List<MenuItem> getMenuItems(String category) throws DAOException;
     public void saveMenuItem(MenuItem menuItem) throws DAOException;
-    
 }

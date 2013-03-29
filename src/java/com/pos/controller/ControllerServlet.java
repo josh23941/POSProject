@@ -102,7 +102,7 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("view_items")){
             //ACTION:
             MenuItemAction menuItemAction = new MenuItemAction();
-            List<MenuItem> menuList = menuItemAction.getMenuItems();
+            List<MenuItem> menuList = menuItemAction.getMenuItems("all");
             request.setAttribute("menuList", menuList);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/ViewItems.jsp";

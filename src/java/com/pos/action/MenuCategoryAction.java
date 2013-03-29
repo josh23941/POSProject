@@ -44,6 +44,8 @@ public class MenuCategoryAction {
         List<MenuCategory> menuCategoryList = null;
         try{
             menuCategoryList = menuCategoryDAO.getMenuCategories();
+            //add root node because it is does not exist in DB
+            menuCategoryList.add(new MenuCategory(1, "root"));
         }catch (DAOException e){
             System.out.println(e.getMessage());
         }

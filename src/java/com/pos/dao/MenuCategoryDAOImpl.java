@@ -4,17 +4,14 @@
  */
 package com.pos.dao;
 
+import com.pos.model.menu.MenuCategory;
 import com.pos.model.menu.MenuCategoryTreeNode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.pos.dao.DAOException;
-import com.pos.model.menu.MenuCategory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +33,7 @@ public class MenuCategoryDAOImpl extends BaseDAO implements MenuCategoryDAO{
 
     @Override
     public MenuCategoryTreeNode getRootNode() throws DAOException{
-        MenuCategoryTreeNode rootNode = new MenuCategoryTreeNode(1,0);
+        MenuCategoryTreeNode rootNode = new MenuCategoryTreeNode(1,0, "root");
         List<MenuCategoryTreeNode> nodeList = new ArrayList<MenuCategoryTreeNode>();
         nodeList.add(rootNode);
         int largestPuid = 0;
@@ -47,7 +44,8 @@ public class MenuCategoryDAOImpl extends BaseDAO implements MenuCategoryDAO{
             while (resultSet.next()){
                 int uid = resultSet.getInt("uid");
                 int puid = resultSet.getInt("parent_uid");
-                MenuCategoryTreeNode temp = new MenuCategoryTreeNode(uid, puid);
+                String name = resultSet.getString("name");
+                MenuCategoryTreeNode temp = new MenuCategoryTreeNode(uid, puid, name);
                 nodeList.add(temp);
                 if(puid > largestPuid){
                     largestPuid = puid;
