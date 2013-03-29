@@ -40,21 +40,5 @@ public class MenuItemAction {
         return menuItems;
     }
     
-    public void saveMenuCategory(MenuCategory menuCategory){
-        try{
-            menuItemDAO.saveMenuCategory(menuCategory);
-        }catch (DAOException e){
-            System.out.println(e.getMessage());
-        }
-    }
     
-    public List<MenuCategory> getMenuCategories(){
-        List<MenuCategory> menuCategoryList = null;
-        try{
-            menuCategoryList = menuItemDAO.getMenuCategories();
-        }catch (DAOException e){
-            System.out.println(e.getMessage());
-        }
-        return menuCategoryList;
-    }
 }

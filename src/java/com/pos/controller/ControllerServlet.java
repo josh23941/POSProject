@@ -4,13 +4,15 @@
  */
 package com.pos.controller;
 
-import com.pos.action.UserAction;
+import com.pos.action.MenuCategoryAction;
 import com.pos.action.MenuItemAction;
+import com.pos.action.UserAction;
 import com.pos.dao.UserDAO;
-import com.pos.form.MenuItemForm;
 import com.pos.form.AddUserForm;
 import com.pos.form.MenuCategoryForm;
+import com.pos.form.MenuItemForm;
 import com.pos.model.menu.MenuCategory;
+import com.pos.model.menu.MenuCategoryTreeNode;
 import com.pos.model.menu.MenuItem;
 import com.pos.model.user.User;
 import java.io.IOException;
@@ -76,8 +78,8 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("item_input")){
             //ACTION:
-            MenuItemAction menuItemAction = new MenuItemAction();
-            List<MenuCategory> menuCategoryList = menuItemAction.getMenuCategories();
+            MenuCategoryAction menuCategoryAction = new MenuCategoryAction();
+            List<MenuCategory> menuCategoryList = menuCategoryAction.getMenuCategories();
             request.setAttribute("menuCategoryList", menuCategoryList);
             //DISPATCH:
             dispatchUrl = "jsp/forms/MenuItemForm.jsp";
@@ -191,8 +193,8 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("add_category")){
             //ACTION:
-            MenuItemAction menuItemAction = new MenuItemAction();
-            List<MenuCategory> menuCategoryList = menuItemAction.getMenuCategories();
+            MenuCategoryAction menuCategoryAction = new MenuCategoryAction();
+            List<MenuCategory> menuCategoryList = menuCategoryAction.getMenuCategories();
             request.setAttribute("menuCategoryList", menuCategoryList);
             //DISPATCH:
             dispatchUrl = "jsp/forms/AddMenuCategory.jsp";
@@ -204,12 +206,21 @@ public class ControllerServlet extends HttpServlet{
             menuCategoryForm.setName(request.getParameter("name"));
             menuCategoryForm.setParent(request.getParameter("parent"));
             MenuCategory menuCategory = menuCategoryForm.getMenuCategoryInstance();
-            MenuItemAction menuItemAction = new MenuItemAction();
-            menuItemAction.saveMenuCategory(menuCategory);
+            MenuCategoryAction menuCategoryAction = new MenuCategoryAction();
+            menuCategoryAction.saveMenuCategory(menuCategory);
             //@todo Might need Form > Model conversion here if non-string parameters become involved.
             request.setAttribute("menuCategory", menuCategory);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/CategoryDetails.jsp";
+        }
+        
+        else if (action.equals("menu_test")){
+            MenuCategoryAction menuCategoryAction = new MenuCategoryAction();
+            MenuCategoryTreeNode rootNode = menuCategoryAction.getRootNode();
+            String htmlMenu = rootNode.outputHTML();
+            request.setAttribute("htmlMenu", htmlMenu);
+            //DISPATCH:
+            dispatchUrl = "jsp/dbViews/Menu.jsp";    
         }
         
         if(dispatchUrl != null){

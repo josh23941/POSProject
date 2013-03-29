@@ -19,7 +19,7 @@
             <tr><td><a href="view_items" class="menuLink">View Menu Items</a></td></tr>
             <tr><td><a href="add_employee" class="menuLink">Add Employee</a></td></tr>
             <tr><td><a href="view_employees" class="menuLink"">View Employees</a></td></tr>
-            <tr><td><a href="place_order" class="menuLink">Place Order</a></td></tr>
+            <tr><td><a href="menu_test" class="menuLink">Place Order</a></td></tr>
             <tr><td><a href="logout" class="menuLink">Log Out</a></td></tr>
         </table>
     </body>
