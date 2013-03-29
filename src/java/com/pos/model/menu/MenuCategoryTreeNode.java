@@ -32,6 +32,7 @@ public class MenuCategoryTreeNode {
             htmlMenu = "";
         }
         menuItemAction = new MenuItemAction();
+        items = menuItemAction.getMenuItems(Integer.toString(uid));
         
     }
     
@@ -41,6 +42,9 @@ public class MenuCategoryTreeNode {
     
     public String outputHTML(){
         htmlMenu = htmlMenu + "<ul>" + this.getCategoryName();
+        for(MenuItem item : items){
+            htmlMenu += "<li>" + item.getName() + "</li>";
+        }
         for(MenuCategoryTreeNode node : childeren){
             node.outputHTML();
         }
