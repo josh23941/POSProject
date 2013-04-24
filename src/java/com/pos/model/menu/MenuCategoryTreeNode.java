@@ -5,8 +5,6 @@
 package com.pos.model.menu;
 
 import com.pos.action.MenuItemAction;
-import com.pos.dao.DAOFactory;
-import com.pos.dao.MenuItemDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +30,7 @@ public class MenuCategoryTreeNode {
             htmlMenu = "";
         }
         menuItemAction = new MenuItemAction();
+        //Pull item array for this category/node according to its uid
         items = menuItemAction.getMenuItems(Integer.toString(uid));
         
     }
@@ -41,14 +40,37 @@ public class MenuCategoryTreeNode {
     }
     
     public String outputHTML(){
-        htmlMenu = htmlMenu + "<ul>" + this.getCategoryName();
-        for(MenuItem item : items){
-            htmlMenu += "<li>" + item.getName() + "</li>";
+        
+        if (!this.getCategoryName().equals("root")){
+            htmlMenu += "<li>" + this.getCategoryName();
         }
-        for(MenuCategoryTreeNode node : childeren){
-            node.outputHTML();
+        
+        if(!items.isEmpty()){
+            htmlMenu += "<ol data-role=\"listmenu\">";
+            
+            for(MenuItem item : items){
+                htmlMenu += "<li "// id=\"" + item.getName() 
+                   /* + "\" class=\"" + item.getCategoryUID() + "\""*/ 
+                    + "onclick=\"javascript:addItemToOrder(\'" + item.getName() + "\')\">" 
+                    + item.getName() + "</li>";
+            }
+            
+            htmlMenu += "</ol>";
         }
-        htmlMenu = htmlMenu + "</ul>";
+        
+        if(!childeren.isEmpty()){
+            if(!this.getCategoryName().equals("root")){
+                htmlMenu += "<ul data-role=\"listmenu\">";
+            }
+            
+            for(MenuCategoryTreeNode node : childeren){
+                node.outputHTML();
+            }
+            htmlMenu += "</ul>";
+        }
+        
+        htmlMenu += "</li>";
+        
         return htmlMenu;
     }
     
@@ -62,5 +84,10 @@ public class MenuCategoryTreeNode {
     
     public String getCategoryName(){
         return categoryName;
+    }
+    
+    //This should only be used from rootNode before building htmlMenu String.
+    public void resetHTML(){
+        htmlMenu = "";
     }
 }

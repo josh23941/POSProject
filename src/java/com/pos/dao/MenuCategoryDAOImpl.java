@@ -77,12 +77,18 @@ public class MenuCategoryDAOImpl extends BaseDAO implements MenuCategoryDAO{
       @Override
     public void saveMenuCategory(MenuCategory menuCategory) throws DAOException {
         String parentUIDsql = GET_UID_BY_NAME_SQL_BASE + "\"" + menuCategory.getParent() + "\"";
+        int parentUID = 0;
         try{
             connection = getConnection();
-            pStatement = connection.prepareStatement(parentUIDsql);
-            resultSet = pStatement.executeQuery();
-            resultSet.next();
-            int parentUID = resultSet.getInt("uid");
+            if(!menuCategory.getParent().equals("root")){
+                pStatement = connection.prepareStatement(parentUIDsql);
+                resultSet = pStatement.executeQuery();
+                resultSet.next();
+                parentUID = resultSet.getInt("uid");
+            }
+            else{
+                parentUID = 1;
+            }
             pStatement = connection.prepareStatement(INSERT_MENU_CATEGORY_SQL);
             pStatement.setString(1, menuCategory.getName());
             pStatement.setInt(2, parentUID);

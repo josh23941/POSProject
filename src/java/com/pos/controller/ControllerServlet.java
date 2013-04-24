@@ -6,6 +6,7 @@ package com.pos.controller;
 
 import com.pos.action.MenuCategoryAction;
 import com.pos.action.MenuItemAction;
+import com.pos.action.OrderAction;
 import com.pos.action.UserAction;
 import com.pos.dao.UserDAO;
 import com.pos.form.AddUserForm;
@@ -217,12 +218,44 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("menu_test")){
             MenuCategoryAction menuCategoryAction = new MenuCategoryAction();
             MenuCategoryTreeNode rootNode = menuCategoryAction.getRootNode();
+            rootNode.resetHTML();
             String htmlMenu = rootNode.outputHTML();
             request.setAttribute("htmlMenu", htmlMenu);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/Menu.jsp";    
         }
         
+        else if (action.equals("update_order")){
+            //build new action object for orders
+            OrderAction orderAction = new OrderAction();
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            String item = request.getParameter("itemName");
+            orderAction.addItemToOrder(uid, item);
+            //possibly build model object for orderupdate?
+            //pull post data from request put in ^ object
+            //execute the correct DB operation using the action object
+            
+            //DISPATCH:
+            dispatchUrl = null;
+        }
+        
+        else if (action.equals("create_order")){
+            OrderAction orderAction = new OrderAction();
+            orderAction.startNewOrder();
+            //DISPATCH:
+            dispatchUrl = null;
+        }
+        
+        //for static resources
+        else if (action.equals("gettheme.js") || 
+                 action.equals("jqx.base.css") ||
+                 action.equals("jquery-1.8.3.min.js") ||
+                 action.equals("jqxcore.js") ||
+                 action.equals("jqxlistment.js") ||
+                 action.equals("jqxbuttons.js")
+                 ){
+            dispatchUrl = "jsp/dbViews/" + action;
+        }
         if(dispatchUrl != null){
             RequestDispatcher rd = request.getRequestDispatcher(dispatchUrl);
             rd.forward(request, response);

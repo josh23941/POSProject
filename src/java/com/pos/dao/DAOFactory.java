@@ -20,4 +20,8 @@ public class DAOFactory {
     public static MenuCategoryDAO getMenuCategoryDAO(){
         return new MenuCategoryDAOImpl();
     }
+    
+    public static OrderDAO getOrderDAO(){
+        return new OrderDAOImpl();
+    }
 }
