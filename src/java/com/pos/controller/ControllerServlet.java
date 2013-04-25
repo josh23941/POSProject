@@ -8,6 +8,7 @@ import com.pos.action.MenuCategoryAction;
 import com.pos.action.MenuItemAction;
 import com.pos.action.OrderAction;
 import com.pos.action.UserAction;
+import com.pos.dao.DAOException;
 import com.pos.dao.UserDAO;
 import com.pos.form.AddUserForm;
 import com.pos.form.MenuCategoryForm;
@@ -221,6 +222,9 @@ public class ControllerServlet extends HttpServlet{
             rootNode.resetHTML();
             String htmlMenu = rootNode.outputHTML();
             request.setAttribute("htmlMenu", htmlMenu);
+            OrderAction orderAction = new OrderAction();
+            int orderId = orderAction.startNewOrder();
+            request.setAttribute("orderId", orderId);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/Menu.jsp";    
         }
@@ -230,7 +234,8 @@ public class ControllerServlet extends HttpServlet{
             OrderAction orderAction = new OrderAction();
             int uid = Integer.parseInt(request.getParameter("uid"));
             String item = request.getParameter("itemName");
-            orderAction.addItemToOrder(uid, item);
+            double price = Double.parseDouble(request.getParameter("price"));
+            orderAction.addItemToOrder(uid, item, price);
             //possibly build model object for orderupdate?
             //pull post data from request put in ^ object
             //execute the correct DB operation using the action object

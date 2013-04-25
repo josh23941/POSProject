@@ -21,7 +21,7 @@ public class DAOFactory {
         return new MenuCategoryDAOImpl();
     }
     
-    public static OrderDAO getOrderDAO(){
+    public static OrderDAO getOrderDAO() throws DAOException{
         return new OrderDAOImpl();
     }
 }

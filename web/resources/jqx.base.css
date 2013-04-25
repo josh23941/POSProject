@@ -3262,4 +3262,11 @@ ol li .jqx-listmenu-item-label:before
     width:10%;
 }
 
-
+#orderRoutingInfo{
+    position:absolute;
+    right:15%;
+    bottom:5%;
+    height:12%;
+    width:40%;
+    border:1px solid black;
+}

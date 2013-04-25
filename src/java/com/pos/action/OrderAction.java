@@ -16,22 +16,28 @@ public class OrderAction {
     private OrderDAO orderDAO;
     
     public OrderAction(){
-        orderDAO = DAOFactory.getOrderDAO();
+        try{
+            orderDAO = DAOFactory.getOrderDAO();
+        }catch(DAOException e){
+            System.out.println("Error Accessing Order Table: " + e.getMessage());
+        }
     }
     
-    public void addItemToOrder(int uid, String item){
+    public void addItemToOrder(int uid, String item, double price){
         try{
-            orderDAO.addItem(uid, item);
+            orderDAO.addItem(uid, item, price);
         }catch(DAOException e){
             System.out.println("Error adding item to order: " + e.getMessage());
         }
     }
     
-    public void startNewOrder(){
+    public int startNewOrder(){
+        Integer orderId = null;
         try{
-            orderDAO.createOrder();
+            orderId = orderDAO.createOrder();
         }catch(DAOException e){
             System.out.println("Error adding item to order: " + e.getMessage());
         }
+        return orderId;
     }
 }

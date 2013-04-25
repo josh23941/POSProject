@@ -34,7 +34,8 @@
             //also adds to the visible representation of the current order on screen.
             function addItemToOrder(name, price){
                 var request = new XMLHttpRequest();
-                var paramString = "itemName=" + name + "&uid=1";
+                var orderId = $('#orderIdCell').html();
+                var paramString = "itemName=" + name + "&uid=" + orderId + "&price=" + price;
                 request.open("POST", "update_order", true);
                 request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 request.setRequestHeader("Content-length", paramString.length);
@@ -43,7 +44,8 @@
                 //add code for building the visual order representation which is separate from the actual DB entry.
                 //may want to make sure DB was updated by checking status of AJAX request?
                 $('#orderItemsTable tbody:last').append('<tr><td class="qty">1</td><td class="name">' 
-                    + name + '</td><td class="unitPrice">$' + price + '</td><td class="priceWithQty">$' + price + '</td>');
+                    + name + '</td><td class="unitPrice">$' + parseFloat(price).toFixed(2) + '</td><td class="priceWithQty">$' 
+                    + parseFloat(price).toFixed(2) + '</td>');
                 updateTotalsBox(price);
             }
             
@@ -80,6 +82,13 @@
                 </tr>
                 <tr>
                     <td class="orderTotalTableData">Total: </td><td id="total" class="orderTotalTableData">$0.00</td>
+                </tr>
+            </table>
+        </div>
+        <div id ="orderRoutingInfo">
+            <table>
+                <tr>
+                    <td>Order Id: </td><td id="orderIdCell"><c:out value="${orderId}"/></td>
                 </tr>
             </table>
         </div>
