@@ -51,7 +51,8 @@ public class MenuCategoryTreeNode {
             for(MenuItem item : items){
                 htmlMenu += "<li "// id=\"" + item.getName() 
                    /* + "\" class=\"" + item.getCategoryUID() + "\""*/ 
-                    + "onclick=\"javascript:addItemToOrder(\'" + item.getName() + "\')\">" 
+                    + "onclick=\"javascript:addItemToOrder(\'" 
+                    + item.getName() + "\',\' " + item.getPrice() + "\')\">" 
                     + item.getName() + "</li>";
             }
             

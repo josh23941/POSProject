@@ -3216,9 +3216,50 @@ ol li .jqx-listmenu-item-label:before
 {
     background-position: left !important;
 }
+
 .jqx-passwordinput-password-strength-inicator
 {
     width: 20%;
     height: 5px;
     margin-top: 5px;
 }
+
+/* BEGIN MY CSS FOR GRADING REFERENCE
+   EVERYTHING ABOVE IS INCLUDED FOR WIDGET BEING USED
+*/
+#orderScreen {
+    width: 50%;
+    height: 80%;
+    position:absolute;
+    right: 5%;
+    top: 10px;
+    border: 1px solid black;
+}
+
+#orderInfo {
+    position:absolute;
+    border: 1px solid black;
+    right: 5%;
+    bottom: 5%;
+    width: 8%;
+    height: 12%;
+}
+
+.orderTotalTableData{
+    width:5%;
+    
+}
+
+.qty{
+    width : 10%;
+}
+
+.name{
+    width:50%;
+}
+
+.priceWithQty .unitPrice{
+    width:10%;
+}
+
+

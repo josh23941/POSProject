@@ -252,7 +252,8 @@ public class ControllerServlet extends HttpServlet{
                  action.equals("jquery-1.8.3.min.js") ||
                  action.equals("jqxcore.js") ||
                  action.equals("jqxlistment.js") ||
-                 action.equals("jqxbuttons.js")
+                 action.equals("jqxbuttons.js") ||
+                 action.equals("placeOrder.css")
                  ){
             dispatchUrl = "jsp/dbViews/" + action;
         }
