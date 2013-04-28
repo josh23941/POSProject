@@ -7,6 +7,10 @@ package com.pos.action;
 import com.pos.dao.DAOException;
 import com.pos.dao.DAOFactory;
 import com.pos.dao.OrderDAO;
+import com.pos.model.menu.CarryoutOrder;
+import com.pos.model.menu.DeliveryOrder;
+import com.pos.model.menu.DineInOrder;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,8 +40,62 @@ public class OrderAction {
         try{
             orderId = orderDAO.createOrder();
         }catch(DAOException e){
-            System.out.println("Error adding item to order: " + e.getMessage());
+            System.out.println("Error starting new order: " + e.getMessage());
         }
         return orderId;
+    }
+    
+    public void completeOrder(DeliveryOrder order){
+        try{
+            orderDAO.completeOrder(order);
+        }catch(DAOException e){
+            System.out.println("Error completing order: " + e.getMessage());
+        }
+    }
+    
+    public void completeOrder(CarryoutOrder order){
+        try{
+            orderDAO.completeOrder(order);
+        }catch(DAOException e){
+            System.out.println("Error completing order: " + e.getMessage());
+        }
+    }
+    
+    public void completeOrder(DineInOrder order){
+        try{
+            orderDAO.completeOrder(order);
+        }catch(DAOException e){
+            System.out.println("Error completing order: " + e.getMessage());
+        }
+    }
+    
+    public ArrayList<DeliveryOrder> getDeliveryOrders(){
+        ArrayList<DeliveryOrder> list = new ArrayList<DeliveryOrder>();
+        try{
+            list = orderDAO.getDeliveryOrders();
+        }catch(DAOException e){
+            System.out.println("Error getting delivery orders: " + e.getMessage());
+        }
+        return list;
+    }
+    
+    public ArrayList<CarryoutOrder> getCarryoutOrders(){
+        ArrayList<CarryoutOrder> list = new ArrayList<CarryoutOrder>();
+        try{
+            list = orderDAO.getCarryoutOrders();
+        }catch(DAOException e){
+            System.out.println("Error getting carryout orders: " + e.getMessage());
+        }
+        return list;
+    }
+    
+    public ArrayList<DineInOrder> getDineInOrders(){
+        ArrayList<DineInOrder> list = new ArrayList<DineInOrder>();
+        try{
+            list = orderDAO.getDineInOrders();
+        }catch(DAOException e){
+            System.out.println("Error getting dine in orders: " + e.getMessage());
+        }
+        return list;
     }
 }

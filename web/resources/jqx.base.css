@@ -3228,10 +3228,10 @@ ol li .jqx-listmenu-item-label:before
    EVERYTHING ABOVE IS INCLUDED FOR WIDGET BEING USED
 */
 #orderScreen {
-    width: 50%;
-    height: 80%;
+    width: 53%;
+    height: 70%;
     position:absolute;
-    right: 5%;
+    right: 2%;
     top: 10px;
     border: 1px solid black;
 }
@@ -3239,15 +3239,14 @@ ol li .jqx-listmenu-item-label:before
 #orderInfo {
     position:absolute;
     border: 1px solid black;
-    right: 5%;
-    bottom: 5%;
-    width: 8%;
+    right: 2%;
+    bottom: 15%;
+    width: 11%;
     height: 12%;
 }
 
 .orderTotalTableData{
     width:5%;
-    
 }
 
 .qty{
@@ -3264,9 +3263,18 @@ ol li .jqx-listmenu-item-label:before
 
 #orderRoutingInfo{
     position:absolute;
-    right:15%;
-    bottom:5%;
-    height:12%;
-    width:40%;
+    right:14%;
+    bottom:1%;
+    height:26%;
+    width:41%;
     border:1px solid black;
 }
+
+#buttons{
+    position: absolute;
+    right:5%;
+    width:8%;
+    bottom:5%;
+}
+
+

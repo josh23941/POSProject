@@ -93,7 +93,9 @@ public class MenuCategoryDAOImpl extends BaseDAO implements MenuCategoryDAO{
             pStatement.setString(1, menuCategory.getName());
             pStatement.setInt(2, parentUID);
             pStatement.execute();
-            resultSet.close();
+            if(resultSet != null){
+                resultSet.close();
+            }
             pStatement.close();
             String thisCategoryUIDsql = GET_UID_BY_NAME_SQL_BASE + "\"" + menuCategory.getName() + "\"";
             pStatement = connection.prepareStatement(thisCategoryUIDsql);

@@ -13,11 +13,10 @@ import com.pos.dao.UserDAO;
 import com.pos.form.AddUserForm;
 import com.pos.form.MenuCategoryForm;
 import com.pos.form.MenuItemForm;
-import com.pos.model.menu.MenuCategory;
-import com.pos.model.menu.MenuCategoryTreeNode;
-import com.pos.model.menu.MenuItem;
+import com.pos.model.menu.*;
 import com.pos.model.user.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -249,6 +248,59 @@ public class ControllerServlet extends HttpServlet{
             orderAction.startNewOrder();
             //DISPATCH:
             dispatchUrl = null;
+        }
+        
+        else if (action.equals("complete_order")){
+            OrderAction orderAction = new OrderAction();
+            String serveType = request.getParameter("serveType");
+            if(serveType.equals("delivery")){
+                DeliveryOrder order = new DeliveryOrder();
+                order.setOrderId(Integer.parseInt(request.getParameter("orderId")));
+                order.setSubTotal(Double.parseDouble(request.getParameter("subtotal")));
+                order.setTax(Double.parseDouble(request.getParameter("tax")));
+                order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
+                order.setAddress(request.getParameter("address"));
+                order.setPhoneNumber(request.getParameter("phone"));
+                order.setWantTime(request.getParameter("wantTime"));
+                order.setTimeStamp(Long.parseLong(request.getParameter("time")));
+                orderAction.completeOrder(order);
+            }
+            else if(serveType.equals("carryout")){
+                CarryoutOrder order = new CarryoutOrder();
+                order.setOrderId(Integer.parseInt(request.getParameter("orderId")));
+                order.setSubTotal(Double.parseDouble(request.getParameter("subtotal")));
+                order.setTax(Double.parseDouble(request.getParameter("tax")));
+                order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
+                order.setName(request.getParameter("name"));
+                order.setPhoneNumber(request.getParameter("phone"));
+                order.setWantTime(request.getParameter("wantTime"));
+                order.setTimeStamp(Long.parseLong(request.getParameter("time")));
+                orderAction.completeOrder(order);
+            }
+            else if(serveType.equals("dinein")){
+                DineInOrder order = new DineInOrder();
+                order.setOrderId(Integer.parseInt(request.getParameter("orderId")));
+                order.setSubTotal(Double.parseDouble(request.getParameter("subtotal")));
+                order.setTax(Double.parseDouble(request.getParameter("tax")));
+                order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
+                order.setTableNumber(Integer.parseInt(request.getParameter("table")));
+                order.setTimeStamp(Long.parseLong(request.getParameter("time")));
+                orderAction.completeOrder(order);
+            }
+        }
+        
+        else if (action.equals("view_orders")){
+            //ACTION:
+            OrderAction orderAction = new OrderAction();
+            ArrayList<DeliveryOrder> deliveryOrders = orderAction.getDeliveryOrders();
+            ArrayList<CarryoutOrder> carryoutOrders = orderAction.getCarryoutOrders();
+            ArrayList<DineInOrder> dineInOrders = orderAction.getDineInOrders();
+            request.setAttribute("deliveryOrders", deliveryOrders);
+            request.setAttribute("carryoutOrders", carryoutOrders);
+            request.setAttribute("dineInOrders", dineInOrders);
+            
+            //DISPATCH:
+            dispatchUrl = "jsp/dbViews/activeOrders.jsp";
         }
         
         //for static resources

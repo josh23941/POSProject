@@ -13,6 +13,7 @@
             <table> 
                 <tr><td><a href="view_items" class="menuLink">View Menu Items</a></td></tr>
                 <tr><td><a href="place_order" class="menuLink">Place Order</a></td></tr>
+                <tr><td><a href="view_orders" class="menuLink">View Active Orders</a></td></tr>
                 <tr><td><a href="logout" class="menuLink">Log Out</a></td></tr>
             </table>
     </head>
