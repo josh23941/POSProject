@@ -13,8 +13,7 @@
         <title>Active Orders</title>
         <style type="text/css">
             th, td{
-                border:1px solid black;
-                
+                border:1px solid black;           
             }
             
             table{
@@ -25,6 +24,7 @@
             th, td{
                 padding: 10px;
             }
+            
             #filterBox{
                 padding:10px;
                 border:1px solid black;
@@ -54,6 +54,39 @@
                     $('.di').show();
                 }
             }
+            
+            function sort(param){
+                var rows = 0;
+                if(param == 'id'){
+                    $('tbody tr').each(function(){
+                        rows++;
+                    });
+                    var rowArray = new Array(rows);
+                    rows = 0;
+                    $('tbody tr').each(function(){
+                        var cellText = $('td:first', $(this)).text();
+                        rowArray[rows] = cellText;
+                        rows++;
+                      
+                    });
+                   
+                    rowArray.sort(function(a,b){
+                        return a-b;
+                    });
+                    for(var i = 0;i<rowArray.length;i++){
+                        console.log(rowArray[i]);
+                    }
+                    console.log("after sort");
+                    var tableString = "";
+                    for(var i=0; i<rowArray.length; i++){
+                        tableString += "<tr id=\"" + rowArray[i] + "\">";
+                        tableString += $('#' + rowArray[i]).html();
+                        tableString += "</tr>";
+                        console.log(tableString);
+                    }
+                    $('#orders tbody').html(tableString);
+                }
+            }
         </script>
     </head>
     <body>
@@ -64,8 +97,8 @@
             <input type="radio" name="filter" onclick="javascript:filter('di')"/><label>Show Dine In</label><br>
         </div>
         <table id="orders">
-            <tr id="tableHeader">
-                <th>Order ID</th>
+            <thead id="tableHeader">
+                <th onclick="javascritp:sort('id')">Order ID</th>
                 <th>Serve Type</th>
                 <th>Name</th>
                 <th>Address</th>
@@ -74,15 +107,15 @@
                 <th>Table #</th>
                 <th>Total</th>
                 <th>Time Ordered</th>
-            </tr>
+            </thead>
             <c:forEach var="order" items="${deliveryOrders}">
-                <c:out escapeXml="false" value="<tr class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td>---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td>---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${carryoutOrders}">
-                <c:out escapeXml="false" value="<tr class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td>---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td>---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${dineInOrders}">
-                <c:out escapeXml="false" value="<tr class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td>---</td><td>---</td><td>---</td><td>---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td>---</td><td>---</td><td>---</td><td>---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
             </c:forEach>
         </table>
     </body>

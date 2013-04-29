@@ -138,19 +138,22 @@
         
         <div id="orderScreen">
             <table id="orderItemsTable">
+                <thead>
+                    <tr><th>Quantity</th><th>Description</th><th>Price Each</th><th>Total</th></tr>
+                </thead>
                 <tbody></tbody>
             </table>
         </div>
         <div id="orderInfo">
             <table id="orderTotalTable">
                 <tr>
-                    <td class="orderTotalTableData">Subtotal:   </td><td id="subtotal"class="orderTotalTableData">$0.00</td>
+                    <td>Subtotal: </td><td id="subtotal">$0.00</td>
                 </tr>
                 <tr>
-                    <td class="orderTotalTableData">Tax: </td><td id="tax" class="orderTotalTableData">$0.00</td>
+                    <td>Tax: </td><td id="tax">$0.00</td>
                 </tr>
                 <tr>
-                    <td class="orderTotalTableData">Total: </td><td id="total" class="orderTotalTableData">$0.00</td>
+                    <td>Total: </td><td id="total">$0.00</td>
                 </tr>
             </table>
         </div>

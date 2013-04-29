@@ -3277,4 +3277,26 @@ ol li .jqx-listmenu-item-label:before
     bottom:5%;
 }
 
+th, td {
+    padding:5px;
+    border:1px solid black;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+#orderRoutingInfo td {
+    border:none;
+    padding:0px;
+}
+
+#orderInfoTable td{
+    padding:0px;
+}
+
+#orderInfo {
+    border:none;
+}
+
 
