@@ -37,40 +37,19 @@
             
             function filter(param){
                 if(param == 'all'){
-                    $('.del').show();
-                    $('.co').show();
-                    $('.di').show();
-                    $('.delCoNull').show();
-                    $('.coDiNull').show();
-                    $('.diNull').show();
-                    $('.delDiNull').show();
+                    $('.del, .co, .di, .delCoNull, .coDiNull, .diNull, .delDiNull').show();
                 }
                 else if(param == 'del'){
-                    $('.co').hide();
-                    $('.di').hide();
-                    $('.del').show();
-                    $('.delCoNull').hide();
-                    $('.delDiNull').hide();
-                    $('.coDiNull').show();
-                    $('.diNull').show();
+                    $('.co, .di, .delCoNull, .delDiNull').hide();
+                    $('.del, .coDiNull, .diNull').show();
                 }
                 else if(param == 'co'){
-                    $('.del').hide();
-                    $('.di').hide();
-                    $('.co').show();
-                    $('.delCoNull').hide();
-                    $('.coDiNull').hide();
-                    $('.diNull').show();
-                    $('.delDiNull').show();
+                    $('.del, .di, .delCoNull, .coDiNull').hide();
+                    $('.co, .diNull, .delDiNull').show();
                 }
                 else if(param == 'di'){
-                    $('.del').hide();
-                    $('.co').hide();
-                    $('.di').show();
-                    $('.coDiNull').hide();
-                    $('.diNull').hide();
-                    $('.delDiNull').hide();
-                    $('.delCoNull').show();
+                    $('.del, .co, .coDiNull, .diNull, .delDiNull').hide();
+                    $('.di, .delCoNull').show();
                 }
             }
             
