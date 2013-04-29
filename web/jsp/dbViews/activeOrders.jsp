@@ -32,27 +32,51 @@
         </style>
         <script type="text/javascript" src="/POSProject/resources/jquery-1.8.3.min.js"></script>
         <script type="text/javascript">
+            
+            var _idSortToggle = 'ascending';
+            
             function filter(param){
                 if(param == 'all'){
                     $('.del').show();
                     $('.co').show();
                     $('.di').show();
+                    $('.delCoNull').show();
+                    $('.coDiNull').show();
+                    $('.diNull').show();
+                    $('.delDiNull').show();
                 }
                 else if(param == 'del'){
                     $('.co').hide();
                     $('.di').hide();
                     $('.del').show();
+                    $('.delCoNull').hide();
+                    $('.delDiNull').hide();
+                    $('.coDiNull').show();
+                    $('.diNull').show();
                 }
                 else if(param == 'co'){
                     $('.del').hide();
                     $('.di').hide();
                     $('.co').show();
+                    $('.delCoNull').hide();
+                    $('.coDiNull').hide();
+                    $('.diNull').show();
+                    $('.delDiNull').show();
                 }
                 else if(param == 'di'){
                     $('.del').hide();
                     $('.co').hide();
                     $('.di').show();
+                    $('.coDiNull').hide();
+                    $('.diNull').hide();
+                    $('.delDiNull').hide();
+                    $('.delCoNull').show();
                 }
+            }
+            
+            function indexToClassObj(rowId, htmlClass){
+                this.rowId = rowId;
+                this.htmlClass = htmlClass;
             }
             
             function sort(param){
@@ -65,24 +89,27 @@
                     rows = 0;
                     $('tbody tr').each(function(){
                         var cellText = $('td:first', $(this)).text();
-                        rowArray[rows] = cellText;
+                        var rowClass = $(this).attr('class');
+                        rowArray[rows] = new indexToClassObj(cellText, rowClass);
                         rows++;
-                      
                     });
-                   
-                    rowArray.sort(function(a,b){
-                        return a-b;
-                    });
-                    for(var i = 0;i<rowArray.length;i++){
-                        console.log(rowArray[i]);
+                    if(_idSortToggle == 'ascending'){
+                        rowArray.sort(function(a,b){
+                            return a.rowId-b.rowId;
+                        });
+                        _idSortToggle = 'descending';
                     }
-                    console.log("after sort");
+                    else{
+                        rowArray.sort(function(a,b){
+                            return b.rowId-a.rowId;
+                        });
+                        _idSortToggle = 'ascending';
+                    }
                     var tableString = "";
                     for(var i=0; i<rowArray.length; i++){
-                        tableString += "<tr id=\"" + rowArray[i] + "\">";
-                        tableString += $('#' + rowArray[i]).html();
+                        tableString += "<tr id=\"" + rowArray[i].rowId + "\" class=\"" + rowArray[i].htmlClass + "\">";
+                        tableString += $('#' + rowArray[i].rowId).html();
                         tableString += "</tr>";
-                        console.log(tableString);
                     }
                     $('#orders tbody').html(tableString);
                 }
@@ -100,22 +127,22 @@
             <thead id="tableHeader">
                 <th onclick="javascritp:sort('id')">Order ID</th>
                 <th>Serve Type</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone #</th>
-                <th>Time Wanted</th>
-                <th>Table #</th>
+                <th class="delDiNull">Name</th>
+                <th class="coDiNull">Address</th>
+                <th class="diNull">Phone #</th>
+                <th class="diNull">Time Wanted</th>
+                <th class="delCoNull">Table #</th>
                 <th>Total</th>
                 <th>Time Ordered</th>
             </thead>
             <c:forEach var="order" items="${deliveryOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td>---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td class=\"delDiNull\">---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${carryoutOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td>---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td>---</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td class=\"coDiNull\">---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${dineInOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td>---</td><td>---</td><td>---</td><td>---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td class=\"diNull\">---</td><td class=\"coDiNull\">---</td><td class=\"diNull\">---</td><td class=\"diNull\">---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
             </c:forEach>
         </table>
     </body>
