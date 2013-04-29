@@ -33,66 +33,137 @@
         <script type="text/javascript" src="/POSProject/resources/jquery-1.8.3.min.js"></script>
         <script type="text/javascript">
             
+            var _filterValue = 'all';
             var _idSortToggle = 'ascending';
+            var _nameSortToggle = 'ascending';
             
             function filter(param){
                 if(param == 'all'){
                     $('.del, .co, .di, .delCoNull, .coDiNull, .diNull, .delDiNull').show();
+                    _filterValue = 'all';
                 }
                 else if(param == 'del'){
                     $('.co, .di, .delCoNull, .delDiNull').hide();
                     $('.del, .coDiNull, .diNull').show();
+                    _filterValue = 'del';
                 }
                 else if(param == 'co'){
                     $('.del, .di, .delCoNull, .coDiNull').hide();
                     $('.co, .diNull, .delDiNull').show();
+                    _filterValue = 'co';
                 }
                 else if(param == 'di'){
                     $('.del, .co, .coDiNull, .diNull, .delDiNull').hide();
                     $('.di, .delCoNull').show();
+                    _filterValue = 'di';
                 }
             }
             
-            function indexToClassObj(rowId, htmlClass){
+            function indexToClassObj(rowId, data, htmlClass){
                 this.rowId = rowId;
+                this.data = data;
                 this.htmlClass = htmlClass;
             }
             
+            function toggleSortVar(param){
+                switch(param){
+                    case 'id':
+                        if(_idSortToggle == 'ascending'){
+                            _idSortToggle = 'descending';
+                        }
+                        else{
+                            _idSortToggle = 'ascending';
+                        }
+                        break;
+                    case 'name':
+                        if(_nameSortToggle == 'ascending'){
+                            _nameSortToggle = 'descending'; 
+                        }
+                        else{
+                            _nameSortToggle = 'ascending';
+                        }
+                        break;
+                }
+            }
             function sort(param){
                 var rows = 0;
-                if(param == 'id'){
-                    $('tbody tr').each(function(){
-                        rows++;
-                    });
-                    var rowArray = new Array(rows);
-                    rows = 0;
-                    $('tbody tr').each(function(){
-                        var cellText = $('td:first', $(this)).text();
-                        var rowClass = $(this).attr('class');
-                        rowArray[rows] = new indexToClassObj(cellText, rowClass);
-                        rows++;
-                    });
-                    if(_idSortToggle == 'ascending'){
+                var sortMethod;
+                var toggle;
+                
+                $('tbody tr').each(function(){
+                    rows++;
+                });
+                var rowArray = new Array(rows);
+                rows = 0;
+                $('tbody tr').each(function(){
+                    var id = $(this).attr('id');
+                    var data;
+                    switch(param){
+                        case 'id': 
+                            data = $('td:first', $(this)).text();
+                            sortMethod = 'numeric';
+                            toggle = _idSortToggle;
+                            break;
+                        case 'name':
+                            data = $('td:nth-child(2)', $(this)).text();
+                            sortMethod = 'alphabetic';
+                            toggle = _nameSortToggle;
+                            break;
+                    }
+                    var rowClass = $(this).attr('class');
+                    rowArray[rows] = new indexToClassObj(id, data, rowClass);
+                    rows++;
+                });
+                if(sortMethod == 'numeric'){
+                    if(toggle == 'ascending'){
                         rowArray.sort(function(a,b){
-                            return a.rowId-b.rowId;
+                            return a.data-b.data;
                         });
-                        _idSortToggle = 'descending';
                     }
                     else{
                         rowArray.sort(function(a,b){
-                            return b.rowId-a.rowId;
+                            return b.data-a.data;
                         });
-                        _idSortToggle = 'ascending';
                     }
-                    var tableString = "";
-                    for(var i=0; i<rowArray.length; i++){
-                        tableString += "<tr id=\"" + rowArray[i].rowId + "\" class=\"" + rowArray[i].htmlClass + "\">";
-                        tableString += $('#' + rowArray[i].rowId).html();
-                        tableString += "</tr>";
-                    }
-                    $('#orders tbody').html(tableString);
+                    toggleSortVar(param);
                 }
-            }
+                else if(sortMethod == 'alphabetic'){
+                    if(toggle == 'ascending'){
+                        rowArray.sort(function(a,b){
+                            if(a.data < b.data){
+                                return -1;
+                            }
+                            if(a.data > b.data){
+                                return 1;
+                            }
+                            else
+                                return 0;
+                        });        
+                    }
+                    else{
+                        rowArray.sort(function(a,b){
+                            if(a.data > b.data){
+                                return -1;
+                            }
+                            if(a.data < b.data){
+                                return 1;
+                            }
+                            else
+                                return 0;
+                        });
+                        rowArray.reverse();
+                    }
+                    toggleSortVar(param);
+                }
+                var tableString = "";
+                for(var i=0; i<rowArray.length; i++){
+                    tableString += "<tr id=\"" + rowArray[i].rowId + "\" class=\"" + rowArray[i].htmlClass + "\">";
+                    tableString += $('#' + rowArray[i].rowId).html();
+                    tableString += "</tr>";
+                }
+                $('#orders tbody').html(tableString);
+                filter(_filterValue);
+            }            
         </script>
     </head>
     <body>
@@ -104,9 +175,9 @@
         </div>
         <table id="orders">
             <thead id="tableHeader">
-                <th onclick="javascritp:sort('id')">Order ID</th>
+                <th onclick="javascript:sort('id')">Order ID</th>
                 <th>Serve Type</th>
-                <th class="delDiNull">Name</th>
+                <th onclick="javascript:sort('name')" class="delDiNull">Name</th>
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
                 <th class="diNull">Time Wanted</th>
