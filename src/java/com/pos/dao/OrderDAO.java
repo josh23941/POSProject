@@ -16,8 +16,7 @@ import java.util.ArrayList;
 public interface OrderDAO {
     public void addItem(int uid, String name, double price) throws DAOException;
     public int createOrder() throws DAOException;
-    public void removeItem(int uid, String name, boolean all) throws DAOException;
-    public void removeOrder(int uid) throws DAOException;
+    public void cancelOrder(int orderId) throws DAOException;
     public void completeOrder(DeliveryOrder order) throws DAOException;
     public void completeOrder(CarryoutOrder order) throws DAOException;
     public void completeOrder(DineInOrder order) throws DAOException;

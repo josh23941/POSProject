@@ -20,9 +20,6 @@ import java.util.Date;
  * @author Josh
  */
 public class OrderDAOImpl extends BaseDAO implements OrderDAO{
-    private static final String SEPARATOR = ",";
-    private static final String GET_ITEMS_IN_ORDER_SQL_BASE = "SELECT items FROM orders WHERE uid=";
-    private static final String UPDATE_ITEMS_IN_ORDER_SQL_BASE = "UPDATE orders SET items=";
     private static final String ADD_ITEM_TO_ORDER_SQL = "INSERT INTO orders VALUES (?,?,?)";
     private static final String CREATE_ORDER_SQL = "INSERT INTO order_ids VALUES (?,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)";
     private static final String GET_ORDER_IDS_SQL = "SELECT order_id from order_ids";
@@ -35,6 +32,9 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String GET_DELIVERY_ORDERS_SQL = "SELECT order_id, address, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"delivery\"";
     private static final String GET_CARRYOUT_ORDERS_SQL = "SELECT order_id, name, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"carryout\"";
     private static final String GET_DINEIN_ORDERS_SQL = "SELECT order_id, tableNumber, tax, subTotal, total, time FROM order_ids WHERE serveType=\"dinein\"";
+    private static final String CANCEL_ORDER_SQL = "DELETE FROM orders WHERE order_id = ?";
+    private static final String RESET_ORDER_ID_SQL = "UPDATE order_ids SET " +
+            "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -113,16 +113,6 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             closeDBObjects(resultSet, pStatement, connection);
         }
         return newId;
-    }
-
-    @Override
-    public void removeItem(int uid, String name, boolean all) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void removeOrder(int uid) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -274,6 +264,23 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             closeDBObjects(resultSet,pStatement,connection);
         }
         return list;
+    }
+
+    @Override
+    public void cancelOrder(int orderId) throws DAOException {
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(CANCEL_ORDER_SQL);
+            pStatement.setInt(1, orderId);
+            pStatement.execute();
+            pStatement = connection.prepareStatement(RESET_ORDER_ID_SQL);
+            pStatement.setInt(1, orderId);
+            pStatement.execute();
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
     }
     
 }

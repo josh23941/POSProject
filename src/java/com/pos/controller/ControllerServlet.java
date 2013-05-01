@@ -303,6 +303,12 @@ public class ControllerServlet extends HttpServlet{
             dispatchUrl = "jsp/dbViews/activeOrders.jsp";
         }
         
+        else if (action.equals("cancel_order")){
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            OrderAction orderAction = new OrderAction();
+            orderAction.cancelOrder(orderId);
+        }
+        
         //for static resources
         else if (action.equals("gettheme.js") || 
                  action.equals("jqx.base.css") ||

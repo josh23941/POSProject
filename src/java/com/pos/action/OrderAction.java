@@ -98,4 +98,12 @@ public class OrderAction {
         }
         return list;
     }
+    
+    public void cancelOrder(int orderId){
+        try{
+            orderDAO.cancelOrder(orderId);
+        }catch(DAOException e){
+            System.out.println("Error cancelling order #" + orderId + ": " + e.getMessage());
+        }
+    }
 }

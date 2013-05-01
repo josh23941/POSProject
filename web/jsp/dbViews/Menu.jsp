@@ -93,11 +93,8 @@
                    "&tax=" + $('#tax').html().substr(1) +
                    "&total=" + $('#total').html().substr(1) +
                    "&time=" + $.now();
-               console.log("inside complete order()");
-               console.log(paramString);
                var serve = _serveType;
                if(serve == 'delivery'){
-                   console.log("insideDeliveryblock");
                    paramString += 
                        "&address=" + $('#delAddr').val() +
                        "&phone=" + $('#delPhone').val() +
@@ -116,7 +113,6 @@
                        "&table=" + $('#ditable').val() +
                        "&serveType=dinein";
                }
-               console.log(paramString);
                request.open('POST', 'complete_order', true);
                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                request.setRequestHeader("Content-length", paramString.length);
@@ -125,8 +121,23 @@
             }
             
             function cancelOrder(){
-                //AJAX request to remove order id from DB and static array of assigned order Id's
-                //also remove any orders entries that correspond to order id
+                //AJAX request to controller to remove all data about the order
+                var request = new XMLHttpRequest();
+                var paramString = "orderId=" + $('#orderIdCell').html();
+                request.open('POST', 'cancel_order', true);
+                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                request.setRequestHeader("Content-length", paramString.length);
+                request.setRequestHeader("Connection", "close");
+                request.send(paramString);
+                //remove form data and javascript data in the right hand boxes
+                $('#subtotal, #tax, #total').html("$0.00");
+                $('#orderItemsTable tbody').html("");
+                $('input:text').val("");
+                $('radio').prop("checked", false);
+                $('#carryOutForm').hide();
+                $('#deliveryForm').hide();
+                $('#dineInForm').hide();
+                _serveType = "";
             }
         </script>
     </head>
