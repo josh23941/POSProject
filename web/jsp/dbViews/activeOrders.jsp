@@ -36,6 +36,12 @@
             var _filterValue = 'all';
             var _idSortToggle = 'ascending';
             var _nameSortToggle = 'ascending';
+            var _timeSortToggle = 'ascending';
+            var _serveSortToggle = 'ascending';
+            
+            $('document').ready(function(){
+               sort('time'); 
+            });
             
             function filter(param){
                 if(param == 'all'){
@@ -83,6 +89,22 @@
                             _nameSortToggle = 'ascending';
                         }
                         break;
+                    case 'time':
+                        if(_timeSortToggle == 'ascending'){
+                            _timeSortToggle = 'descending';
+                        }
+                        else{
+                            _timeSortToggle = 'ascending';
+                        }
+                        break;
+                    case 'serve':
+                        if(_serveSortToggle == 'ascending'){
+                            _serveSortToggle = 'descending';
+                        }
+                        else{
+                            _serveSortToggle = 'ascending';
+                        }
+                        break;
                 }
             }
             function sort(param){
@@ -105,9 +127,22 @@
                             toggle = _idSortToggle;
                             break;
                         case 'name':
-                            data = $('td:nth-child(2)', $(this)).text();
+                            data = $('td:eq(2)', $(this)).text();
+                            console.log(data);
+                            //data = $('nth-child(3)', $(this)).text();
                             sortMethod = 'alphabetic';
                             toggle = _nameSortToggle;
+                            break;
+                        case 'time':
+                            data = $('td:eq(9)', $(this)).text();
+                            sortMethod = 'numeric';
+                            toggle = _timeSortToggle;
+                            break;
+                        case 'serve':
+                            data = $('td:eq(1)', $(this)).text();
+                            console.log(data);
+                            sortMethod = 'alphabetic';
+                            toggle = _serveSortToggle;
                             break;
                     }
                     var rowClass = $(this).attr('class');
@@ -128,29 +163,17 @@
                     toggleSortVar(param);
                 }
                 else if(sortMethod == 'alphabetic'){
-                    if(toggle == 'ascending'){
-                        rowArray.sort(function(a,b){
-                            if(a.data < b.data){
-                                return -1;
-                            }
-                            if(a.data > b.data){
-                                return 1;
-                            }
-                            else
-                                return 0;
+                    rowArray.sort(function(a,b){
+                        if(a.data < b.data){
+                            return -1;
+                        }
+                        if(a.data > b.data){
+                            return 1;
+                        }
+                        else
+                            return 0;
                         });        
-                    }
-                    else{
-                        rowArray.sort(function(a,b){
-                            if(a.data > b.data){
-                                return -1;
-                            }
-                            if(a.data < b.data){
-                                return 1;
-                            }
-                            else
-                                return 0;
-                        });
+                    if(toggle == 'descending'){
                         rowArray.reverse();
                     }
                     toggleSortVar(param);
@@ -176,23 +199,23 @@
         <table id="orders">
             <thead id="tableHeader">
                 <th onclick="javascript:sort('id')">Order ID</th>
-                <th>Serve Type</th>
+                <th onclick="javascript:sort('serve')">Serve Type</th>
                 <th onclick="javascript:sort('name')" class="delDiNull">Name</th>
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
                 <th class="diNull">Time Wanted</th>
                 <th class="delCoNull">Table #</th>
                 <th>Total</th>
-                <th>Time Ordered</th>
+                <th onclick="javascript:sort('time')">Time Ordered</th>
             </thead>
             <c:forEach var="order" items="${deliveryOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td class=\"delDiNull\">---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td class=\"delDiNull\">---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${carryoutOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td class=\"coDiNull\">---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td class=\"coDiNull\">---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${dineInOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td class=\"diNull\">---</td><td class=\"coDiNull\">---</td><td class=\"diNull\">---</td><td class=\"diNull\">---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td class=\"diNull\">---</td><td class=\"coDiNull\">---</td><td class=\"diNull\">---</td><td class=\"diNull\">---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
         </table>
     </body>
