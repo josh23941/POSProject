@@ -38,6 +38,7 @@
             var _nameSortToggle = 'ascending';
             var _timeSortToggle = 'ascending';
             var _serveSortToggle = 'ascending';
+            var _tableSortToggle = 'ascending';
             
             $('document').ready(function(){
                sort('time'); 
@@ -105,6 +106,14 @@
                             _serveSortToggle = 'ascending';
                         }
                         break;
+                    case 'table':
+                        if(_tableSortToggle == 'ascending'){
+                            _tableSortToggle = 'descending';
+                        }
+                        else{
+                            _tableSortToggle = 'ascending';
+                        }
+                        break;
                 }
             }
             function sort(param){
@@ -128,8 +137,6 @@
                             break;
                         case 'name':
                             data = $('td:eq(2)', $(this)).text();
-                            console.log(data);
-                            //data = $('nth-child(3)', $(this)).text();
                             sortMethod = 'alphabetic';
                             toggle = _nameSortToggle;
                             break;
@@ -140,9 +147,13 @@
                             break;
                         case 'serve':
                             data = $('td:eq(1)', $(this)).text();
-                            console.log(data);
                             sortMethod = 'alphabetic';
                             toggle = _serveSortToggle;
+                            break;
+                        case 'table':
+                            data = $('td:eq(6)', $(this)).text();
+                            sortMethod = 'numeric';
+                            toggle = _tableSortToggle;
                             break;
                     }
                     var rowClass = $(this).attr('class');
@@ -152,12 +163,34 @@
                 if(sortMethod == 'numeric'){
                     if(toggle == 'ascending'){
                         rowArray.sort(function(a,b){
-                            return a.data-b.data;
+                            if(a.data != "---" && b.data != "---"){
+                                return a.data-b.data;
+                            }
+                            else if(a.data == "---" && b.data != "---"){
+                                return -1;
+                            }
+                            else if(a.data != "---" && b.data == "---"){
+                                return 1;
+                            }
+                            else {
+                                return 0;
+                            }
                         });
                     }
                     else{
                         rowArray.sort(function(a,b){
-                            return b.data-a.data;
+                            if(a.data != "---" && b.data != "---"){
+                                return b.data-a.data;
+                            }
+                            else if(a.data == "---" && b.data != "---"){
+                                return 1;
+                            }
+                            else if(a.data != "---" && b.data == "---"){
+                                return -1;
+                            }
+                            else{
+                                return 0;
+                            }
                         });
                     }
                     toggleSortVar(param);
@@ -204,7 +237,7 @@
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
                 <th class="diNull">Time Wanted</th>
-                <th class="delCoNull">Table #</th>
+                <th onclick="javascript:sort('table')" class="delCoNull">Table #</th>
                 <th>Total</th>
                 <th onclick="javascript:sort('time')">Time Ordered</th>
             </thead>
