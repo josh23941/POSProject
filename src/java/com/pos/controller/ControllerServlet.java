@@ -4,11 +4,13 @@
  */
 package com.pos.controller;
 
+import com.pos.model.order.CarryoutOrder;
+import com.pos.model.order.DineInOrder;
+import com.pos.model.order.DeliveryOrder;
 import com.pos.action.MenuCategoryAction;
 import com.pos.action.MenuItemAction;
 import com.pos.action.OrderAction;
 import com.pos.action.UserAction;
-import com.pos.dao.DAOException;
 import com.pos.dao.UserDAO;
 import com.pos.form.AddUserForm;
 import com.pos.form.MenuCategoryForm;
@@ -147,13 +149,6 @@ public class ControllerServlet extends HttpServlet{
             
         }
         
-        else if (action.equals("place_order")){
-            //ACTION:
-            //DISPATCH:
-                //@todo implement jsp/PlaceOrder.jsp
-            dispatchUrl = "jsp/PlaceOrder.jsp";
-        }
-        
         else if (action.equals("logout")){
             //ACTION:
                 //@todo kill session 
@@ -223,7 +218,32 @@ public class ControllerServlet extends HttpServlet{
             String htmlMenu = rootNode.outputHTML();
             request.setAttribute("htmlMenu", htmlMenu);
             OrderAction orderAction = new OrderAction();
-            int orderId = orderAction.startNewOrder();
+            int orderId;
+            if(request.getParameter("editId")!= null){
+                orderId = Integer.parseInt(request.getParameter("editId"));
+                //Refill order state, thinking build order obj here and access via jsp
+                String serveType = request.getParameter("serveType");
+                if(serveType.equals("delivery")){
+                    DeliveryOrder order = orderAction.getDeliveryOrder(orderId);
+                    request.setAttribute("orderJSON", order.getJSON());
+                    request.setAttribute("serveType", "delivery");
+                }
+                else if(serveType.equals("carryout")){
+                    CarryoutOrder order = orderAction.getCarryoutOrder(orderId);
+                    request.setAttribute("orderJSON", order.getJSON());
+                    request.setAttribute("serveType", "carryout");
+                }
+                else if(serveType.equals("dinein")){
+                    DineInOrder order = orderAction.getDineInOrder(orderId);
+                    request.setAttribute("orderJSON", order.getJSON());
+                    request.setAttribute("serveType", "dinein");
+                }
+            request.setAttribute("loadType", "edit");
+            }
+            else{
+                orderId = orderAction.startNewOrder();
+                request.setAttribute("loadType", "new");
+            }
             request.setAttribute("orderId", orderId);
             //DISPATCH:
             dispatchUrl = "jsp/dbViews/Menu.jsp";    

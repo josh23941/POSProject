@@ -7,9 +7,9 @@ package com.pos.action;
 import com.pos.dao.DAOException;
 import com.pos.dao.DAOFactory;
 import com.pos.dao.OrderDAO;
-import com.pos.model.menu.CarryoutOrder;
-import com.pos.model.menu.DeliveryOrder;
-import com.pos.model.menu.DineInOrder;
+import com.pos.model.order.CarryoutOrder;
+import com.pos.model.order.DeliveryOrder;
+import com.pos.model.order.DineInOrder;
 import java.util.ArrayList;
 
 /**
@@ -113,5 +113,35 @@ public class OrderAction {
         }catch(DAOException e){
             System.out.println("Error serving order #" + orderId + ": " + e.getMessage());
         }
+    }
+    
+    public DeliveryOrder getDeliveryOrder(int orderId){
+        DeliveryOrder order = new DeliveryOrder();
+        try{
+            order = orderDAO.getDeliveryOrder(orderId);
+        }catch(DAOException e){
+            System.out.println("Error getting delivery order #" + orderId + ": " + e.getMessage());
+        }
+        return order;
+    }
+    
+    public CarryoutOrder getCarryoutOrder(int orderId){
+        CarryoutOrder order = new CarryoutOrder();
+        try{
+            order = orderDAO.getCarryoutOrder(orderId);
+        }catch(DAOException e){
+            System.out.println("Error getting carryout order #" + orderId + ": " + e.getMessage());
+        }
+        return order;
+    }
+    
+    public DineInOrder getDineInOrder(int orderId){
+        DineInOrder order = new DineInOrder();
+        try{
+            order = orderDAO.getDineInOrder(orderId);
+        }catch(DAOException e){
+            System.out.println("Error getting dine in order #" + orderId + ": " + e.getMessage());
+        }
+        return order;
     }
 }

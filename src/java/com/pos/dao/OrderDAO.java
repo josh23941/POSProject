@@ -4,9 +4,9 @@
  */
 package com.pos.dao;
 
-import com.pos.model.menu.CarryoutOrder;
-import com.pos.model.menu.DeliveryOrder;
-import com.pos.model.menu.DineInOrder;
+import com.pos.model.order.CarryoutOrder;
+import com.pos.model.order.DeliveryOrder;
+import com.pos.model.order.DineInOrder;
 import java.util.ArrayList;
 
 /**
@@ -24,4 +24,7 @@ public interface OrderDAO {
     public ArrayList<CarryoutOrder> getCarryoutOrders(boolean active) throws DAOException;
     public ArrayList<DineInOrder> getDineInOrders(boolean active) throws DAOException;
     public void serveOrder(int orderId) throws DAOException;
+    public DeliveryOrder getDeliveryOrder(int orderId) throws DAOException;
+    public CarryoutOrder getCarryoutOrder(int orderId) throws DAOException;
+    public DineInOrder getDineInOrder(int orderId) throws DAOException;
 }

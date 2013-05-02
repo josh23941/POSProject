@@ -4,9 +4,9 @@
  */
 package com.pos.dao;
 
-import com.pos.model.menu.CarryoutOrder;
-import com.pos.model.menu.DeliveryOrder;
-import com.pos.model.menu.DineInOrder;
+import com.pos.model.order.CarryoutOrder;
+import com.pos.model.order.DeliveryOrder;
+import com.pos.model.order.DineInOrder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ import java.util.Date;
  */
 public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String ADD_ITEM_TO_ORDER_SQL = "INSERT INTO orders VALUES (?,?,?)";
-    private static final String CREATE_ORDER_SQL = "INSERT INTO order_ids VALUES (?,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)";
+    private static final String CREATE_ORDER_SQL = "INSERT INTO order_ids VALUES (?,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1)";
     private static final String GET_ORDER_IDS_SQL = "SELECT order_id from order_ids";
     private static final String COMPLETE_DELIVERY_ORDER_SQL = "UPDATE order_ids SET " + 
             "serveType = ?, address = ?, phone = ?, wantTime = ?, subtotal = ?, tax = ?, total = ?, time = ? WHERE order_id = ?";
@@ -36,6 +36,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String RESET_ORDER_ID_SQL = "UPDATE order_ids SET " +
             "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
     private static final String SERVE_ORDER_SQL = "UPDATE order_ids SET active=0 WHERE order_id=?";
+    private static final String GET_ORDER_BY_ID_SQL = "SELECT * FROM order_ids WHERE order_id=?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -204,8 +205,8 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
                 order.setSubTotal(resultSet.getDouble("subtotal"));
                 order.setTotalPrice(resultSet.getDouble("total"));
                 order.setTimeStamp(resultSet.getLong("time"));
-                Date date = new Date(order.getTimeStamp());
-                order.setHumanReadableTime(date.toString());
+                //Date date = new Date(order.getTimeStamp());
+                //order.setHumanReadableTime(date.toString());
                 list.add(order);
             }
         }catch(SQLException e){
@@ -239,8 +240,8 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
                 order.setSubTotal(resultSet.getDouble("subtotal"));
                 order.setTotalPrice(resultSet.getDouble("total"));
                 order.setTimeStamp(resultSet.getLong("time"));
-                Date date = new Date(order.getTimeStamp());
-                order.setHumanReadableTime(date.toString());
+                //Date date = new Date(order.getTimeStamp());
+                //order.setHumanReadableTime(date.toString());
                 list.add(order);
             }
         }catch(SQLException e){
@@ -272,8 +273,8 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
                 order.setSubTotal(resultSet.getDouble("subtotal"));
                 order.setTotalPrice(resultSet.getDouble("total"));
                 order.setTimeStamp(resultSet.getLong("time"));
-                Date date = new Date(order.getTimeStamp());
-                order.setHumanReadableTime(date.toString());
+                //Date date = new Date(order.getTimeStamp());
+                //order.setHumanReadableTime(date.toString());
                 list.add(order);
             }
         }catch(SQLException e){
@@ -313,6 +314,79 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
         }finally{
             closeDBObjects(resultSet,pStatement,connection);
         }
+    }
+
+    @Override
+    public DeliveryOrder getDeliveryOrder(int orderId) throws DAOException {
+        DeliveryOrder order = new DeliveryOrder();
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(GET_ORDER_BY_ID_SQL);
+            pStatement.setInt(1,orderId);
+            resultSet = pStatement.executeQuery();
+            resultSet.next();
+            order.setOrderId(orderId);
+            order.setAddress(resultSet.getString("address"));
+            order.setPhoneNumber(resultSet.getString("phone"));
+            order.setSubTotal(resultSet.getDouble("subTotal"));
+            order.setTotalPrice(resultSet.getDouble("total"));
+            order.setTax(resultSet.getDouble("tax"));
+            order.setWantTime(resultSet.getString("wantTime"));
+            order.setTimeStamp(resultSet.getLong("time"));
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+        return order;
+    }
+
+    @Override
+    public CarryoutOrder getCarryoutOrder(int orderId) throws DAOException {
+        CarryoutOrder order = new CarryoutOrder();
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(GET_ORDER_BY_ID_SQL);
+            pStatement.setInt(1,orderId);
+            resultSet = pStatement.executeQuery();
+            resultSet.next();
+            order.setOrderId(orderId);
+            order.setName(resultSet.getString("name"));
+            order.setPhoneNumber(resultSet.getString("phone"));
+            order.setSubTotal(resultSet.getDouble("subTotal"));
+            order.setTotalPrice(resultSet.getDouble("total"));
+            order.setTax(resultSet.getDouble("tax"));
+            order.setWantTime(resultSet.getString("wantTime"));
+            order.setTimeStamp(resultSet.getLong("time"));
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+        return order;
+    }
+
+    @Override
+    public DineInOrder getDineInOrder(int orderId) throws DAOException {
+        DineInOrder order = new DineInOrder();
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(GET_ORDER_BY_ID_SQL);
+            pStatement.setInt(1,orderId);
+            resultSet = pStatement.executeQuery();
+            resultSet.next();
+            order.setOrderId(orderId);
+            order.setTableNumber(resultSet.getInt("tableNumber"));
+            order.setSubTotal(resultSet.getDouble("subTotal"));
+            order.setTotalPrice(resultSet.getDouble("total"));
+            order.setTax(resultSet.getDouble("tax"));
+            order.setTimeStamp(resultSet.getLong("time"));
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+        return order;
     }
     
 }

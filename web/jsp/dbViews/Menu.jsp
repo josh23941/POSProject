@@ -28,10 +28,43 @@
                                         showHeader: true,
                                         showBackButton: true,
                                         showFilter: false})
+                if(_loadType == 'edit'){
+                    $('#subtotal').html('$' + parseFloat( _orderJSON.subTotal).toFixed(2));
+                    $('#tax').html('$' + parseFloat(_orderJSON.tax).toFixed(2));
+                    $('#total').html('$' + parseFloat(_orderJSON.totalPrice).toFixed(2));
+                    switch(_serveType){
+                        case 'delivery':{
+                            $('#delAddr').val(_orderJSON.address);
+                            $('#delPhone').val(_orderJSON.phone);
+                            $('#delTime').val(_orderJSON.wantTime);
+                            break;
+                        }
+                        case 'carryout':{
+                            $('#coname').val(_orderJSON.name);
+                            $('#cophone').val(_orderJSON.phone);
+                            $('#cotime').val(_orderJSON.wantTime);
+                            break;
+                        }
+                        case 'dinein':{
+                            $('#ditable').val(_orderJSON.table);
+                            break;
+                        }
+                    }
+                    displayServeTypeForm(_serveType);
+                    $('input:radio').each(function(){
+                        if($(this).val() == _serveType){
+                            $(this).attr('checked', true);
+                        }
+                    });
+                }
             });
             
             //GLOBALS:
-            var _serveType;
+            var _serveType = '${serveType}';
+            var _loadType = '${loadType}';
+            var _orderJSON = ${orderJSON};
+            
+            
             //sends off update to order in DB...for now this is set up to test one order with uid = 0.
             //also adds to the visible representation of the current order on screen.
             function addItemToOrder(name, price){
