@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pos.model.menu;
+package com.pos.model.order;
 
 /**
  *
@@ -42,5 +42,15 @@ public class CarryoutOrder extends Order{
         this.wantTime = wantTime;
     }
     
-    
+    public String getJSON(){
+        return "{'orderId':'"+this.getOrderId()+"'," +
+                "'totalPrice':'" + this.getTotalPrice() + "'," +
+                "'subTotal':'" + this.getSubTotal() + "'," +
+                "'tax':'" + this.getTax() + "'," + 
+                "'timeStamp':'" + this.getTimeStamp() + "'," +
+                "'humanReadableTime':'" + this.getHumanReadableTime() + "'," +
+                "'name':'" + this.getName() + "'," +
+                "'phone':'" + this.getPhoneNumber() + "'," +
+                "'wantTime':'" + this.getWantTime() + "'}";              
+    }
 }

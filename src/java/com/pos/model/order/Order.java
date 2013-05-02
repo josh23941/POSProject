@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pos.model.menu;
+package com.pos.model.order;
 
 import java.util.Date;
 import java.util.List;
