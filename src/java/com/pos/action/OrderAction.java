@@ -69,30 +69,30 @@ public class OrderAction {
         }
     }
     
-    public ArrayList<DeliveryOrder> getDeliveryOrders(){
+    public ArrayList<DeliveryOrder> getDeliveryOrders(boolean active){
         ArrayList<DeliveryOrder> list = new ArrayList<DeliveryOrder>();
         try{
-            list = orderDAO.getDeliveryOrders();
+            list = orderDAO.getDeliveryOrders(active);
         }catch(DAOException e){
             System.out.println("Error getting delivery orders: " + e.getMessage());
         }
         return list;
     }
     
-    public ArrayList<CarryoutOrder> getCarryoutOrders(){
+    public ArrayList<CarryoutOrder> getCarryoutOrders(boolean active){
         ArrayList<CarryoutOrder> list = new ArrayList<CarryoutOrder>();
         try{
-            list = orderDAO.getCarryoutOrders();
+            list = orderDAO.getCarryoutOrders(active);
         }catch(DAOException e){
             System.out.println("Error getting carryout orders: " + e.getMessage());
         }
         return list;
     }
     
-    public ArrayList<DineInOrder> getDineInOrders(){
+    public ArrayList<DineInOrder> getDineInOrders(boolean active){
         ArrayList<DineInOrder> list = new ArrayList<DineInOrder>();
         try{
-            list = orderDAO.getDineInOrders();
+            list = orderDAO.getDineInOrders(active);
         }catch(DAOException e){
             System.out.println("Error getting dine in orders: " + e.getMessage());
         }
@@ -104,6 +104,14 @@ public class OrderAction {
             orderDAO.cancelOrder(orderId);
         }catch(DAOException e){
             System.out.println("Error cancelling order #" + orderId + ": " + e.getMessage());
+        }
+    }
+
+    public void serveOrder(int orderId) {
+        try{
+            orderDAO.serveOrder(orderId);
+        }catch(DAOException e){
+            System.out.println("Error serving order #" + orderId + ": " + e.getMessage());
         }
     }
 }

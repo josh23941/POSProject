@@ -302,9 +302,9 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("view_orders")){
             //ACTION:
             OrderAction orderAction = new OrderAction();
-            ArrayList<DeliveryOrder> deliveryOrders = orderAction.getDeliveryOrders();
-            ArrayList<CarryoutOrder> carryoutOrders = orderAction.getCarryoutOrders();
-            ArrayList<DineInOrder> dineInOrders = orderAction.getDineInOrders();
+            ArrayList<DeliveryOrder> deliveryOrders = orderAction.getDeliveryOrders(true);
+            ArrayList<CarryoutOrder> carryoutOrders = orderAction.getCarryoutOrders(true);
+            ArrayList<DineInOrder> dineInOrders = orderAction.getDineInOrders(true);
             request.setAttribute("deliveryOrders", deliveryOrders);
             request.setAttribute("carryoutOrders", carryoutOrders);
             request.setAttribute("dineInOrders", dineInOrders);

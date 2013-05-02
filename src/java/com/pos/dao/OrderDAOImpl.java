@@ -29,9 +29,9 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             "serveType = ?, name = ?, phone = ?, wantTime = ?, subtotal = ?, tax = ?, total = ?, time = ? WHERE order_id = ?";
     private static final String COMPLETE_DINEIN_ORDER_SQL = "UPDATE order_ids SET " +
             "serveType = ?, tableNumber = ?, subtotal = ?, tax = ?, total = ?, time = ? WHERE order_id = ?";
-    private static final String GET_DELIVERY_ORDERS_SQL = "SELECT order_id, address, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"delivery\"";
-    private static final String GET_CARRYOUT_ORDERS_SQL = "SELECT order_id, name, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"carryout\"";
-    private static final String GET_DINEIN_ORDERS_SQL = "SELECT order_id, tableNumber, tax, subTotal, total, time FROM order_ids WHERE serveType=\"dinein\"";
+    private static final String GET_DELIVERY_ORDERS_SQL = "SELECT order_id, address, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"delivery\" AND active=?";
+    private static final String GET_CARRYOUT_ORDERS_SQL = "SELECT order_id, name, phone, wantTime, tax, subTotal, total, time FROM order_ids WHERE serveType=\"carryout\" AND active=?";
+    private static final String GET_DINEIN_ORDERS_SQL = "SELECT order_id, tableNumber, tax, subTotal, total, time FROM order_ids WHERE serveType=\"dinein\" AND active=?";
     private static final String CANCEL_ORDER_SQL = "DELETE FROM orders WHERE order_id = ?";
     private static final String RESET_ORDER_ID_SQL = "UPDATE order_ids SET " +
             "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
@@ -182,11 +182,17 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
   
 
     @Override
-    public ArrayList<DeliveryOrder> getDeliveryOrders() throws DAOException {
+    public ArrayList<DeliveryOrder> getDeliveryOrders(boolean active) throws DAOException {
         ArrayList<DeliveryOrder> list = new ArrayList<DeliveryOrder>();
         try{
             connection = getConnection();
             pStatement = connection.prepareStatement(GET_DELIVERY_ORDERS_SQL);
+            if(active){
+                pStatement.setInt(1,1);
+            }
+            else{
+                pStatement.setInt(1,0);
+            }
             resultSet = pStatement.executeQuery();
             while(resultSet.next()){
                 DeliveryOrder order = new DeliveryOrder();
@@ -211,11 +217,17 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     }
 
     @Override
-    public ArrayList<CarryoutOrder> getCarryoutOrders() throws DAOException {
+    public ArrayList<CarryoutOrder> getCarryoutOrders(boolean active) throws DAOException {
         ArrayList<CarryoutOrder> list = new ArrayList<CarryoutOrder>();
         try{
             connection = getConnection();
             pStatement = connection.prepareStatement(GET_CARRYOUT_ORDERS_SQL);
+            if(active){
+                pStatement.setInt(1,1);
+            }
+            else{
+                pStatement.setInt(1,0);
+            }
             resultSet = pStatement.executeQuery();
             while(resultSet.next()){
                 CarryoutOrder order = new CarryoutOrder();
@@ -240,11 +252,17 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     }
 
     @Override
-    public ArrayList<DineInOrder> getDineInOrders() throws DAOException {
+    public ArrayList<DineInOrder> getDineInOrders(boolean active) throws DAOException {
         ArrayList<DineInOrder> list = new ArrayList<DineInOrder>();
         try{
             connection = getConnection();
             pStatement = connection.prepareStatement(GET_DINEIN_ORDERS_SQL);
+            if(active){
+                pStatement.setInt(1,1);
+            }
+            else{
+                pStatement.setInt(1,0);
+            }
             resultSet = pStatement.executeQuery();
             while(resultSet.next()){
                 DineInOrder order = new DineInOrder();

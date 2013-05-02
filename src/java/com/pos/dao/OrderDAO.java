@@ -20,8 +20,8 @@ public interface OrderDAO {
     public void completeOrder(DeliveryOrder order) throws DAOException;
     public void completeOrder(CarryoutOrder order) throws DAOException;
     public void completeOrder(DineInOrder order) throws DAOException;
-    public ArrayList<DeliveryOrder> getDeliveryOrders() throws DAOException;
-    public ArrayList<CarryoutOrder> getCarryoutOrders() throws DAOException;
-    public ArrayList<DineInOrder> getDineInOrders() throws DAOException;
+    public ArrayList<DeliveryOrder> getDeliveryOrders(boolean active) throws DAOException;
+    public ArrayList<CarryoutOrder> getCarryoutOrders(boolean active) throws DAOException;
+    public ArrayList<DineInOrder> getDineInOrders(boolean active) throws DAOException;
     public void serveOrder(int orderId) throws DAOException;
 }
