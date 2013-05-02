@@ -16,6 +16,7 @@ import com.pos.form.MenuItemForm;
 import com.pos.model.menu.*;
 import com.pos.model.user.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -245,7 +246,16 @@ public class ControllerServlet extends HttpServlet{
         
         else if (action.equals("create_order")){
             OrderAction orderAction = new OrderAction();
-            orderAction.startNewOrder();
+            String newOrderId = Integer.toString(orderAction.startNewOrder());
+            String callback = request.getParameter("callback");
+            String responseString = callback + "({'id': '" + newOrderId + "'})"; 
+            response.setContentType("text/javascript");
+            response.setContentLength(responseString.length());
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            PrintWriter out = response.getWriter();
+            out.println(responseString);
+            out.close();
+            out.flush();
             //DISPATCH:
             dispatchUrl = null;
         }

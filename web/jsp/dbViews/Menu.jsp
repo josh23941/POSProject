@@ -118,6 +118,12 @@
                request.setRequestHeader("Content-length", paramString.length);
                request.setRequestHeader("Connection", "close");
                request.send(paramString);
+               //Get next orderId from server (requires padded JSON to use response)
+               $.getJSON("http://localhost:8080/POSProject/create_order?callback=?", function(result){
+                   $('#orderIdCell').html(result.id);
+               });
+               //Reset everything for next order
+               resetFields();
             }
             
             function cancelOrder(){
@@ -130,6 +136,10 @@
                 request.setRequestHeader("Connection", "close");
                 request.send(paramString);
                 //remove form data and javascript data in the right hand boxes
+                resetFields();
+            }
+            
+            function resetFields(){
                 $('#subtotal, #tax, #total').html("$0.00");
                 $('#orderItemsTable tbody').html("");
                 $('input:text').val("");
