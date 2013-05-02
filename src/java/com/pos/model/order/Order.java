@@ -5,7 +5,6 @@
 package com.pos.model.order;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -59,6 +58,7 @@ public class Order{
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+        this.setHumanReadableTime(new Date(timeStamp).toString());
     }
 
     public String getHumanReadableTime() {
