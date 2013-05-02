@@ -319,6 +319,12 @@ public class ControllerServlet extends HttpServlet{
             orderAction.cancelOrder(orderId);
         }
         
+        else if (action.equals("serve_order")){
+            OrderAction orderAction = new OrderAction();
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            orderAction.serveOrder(orderId);
+            
+        }
         //for static resources
         else if (action.equals("gettheme.js") || 
                  action.equals("jqx.base.css") ||

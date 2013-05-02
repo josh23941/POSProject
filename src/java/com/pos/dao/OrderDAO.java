@@ -23,4 +23,5 @@ public interface OrderDAO {
     public ArrayList<DeliveryOrder> getDeliveryOrders() throws DAOException;
     public ArrayList<CarryoutOrder> getCarryoutOrders() throws DAOException;
     public ArrayList<DineInOrder> getDineInOrders() throws DAOException;
+    public void serveOrder(int orderId) throws DAOException;
 }

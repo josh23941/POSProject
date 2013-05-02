@@ -35,6 +35,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String CANCEL_ORDER_SQL = "DELETE FROM orders WHERE order_id = ?";
     private static final String RESET_ORDER_ID_SQL = "UPDATE order_ids SET " +
             "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
+    private static final String SERVE_ORDER_SQL = "UPDATE order_ids SET active=0 WHERE order_id=?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -98,8 +99,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             if(!assignedOrderIds.isEmpty()){
                 newId = (Integer)assignedOrderIds.get(assignedOrderIds.size()-1);
                 newId++;
-                assignedOrderIds.add(newId);
-                
+                assignedOrderIds.add(newId);      
             }
             else{
                 newId = 0;
@@ -274,6 +274,20 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             pStatement.setInt(1, orderId);
             pStatement.execute();
             pStatement = connection.prepareStatement(RESET_ORDER_ID_SQL);
+            pStatement.setInt(1, orderId);
+            pStatement.execute();
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+    }
+
+    @Override
+    public void serveOrder(int orderId) throws DAOException {
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(SERVE_ORDER_SQL);
             pStatement.setInt(1, orderId);
             pStatement.execute();
         }catch(SQLException e){
