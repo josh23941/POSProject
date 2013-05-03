@@ -29,6 +29,15 @@
                                         showBackButton: true,
                                         showFilter: false})
                 if(_loadType == 'edit'){
+                    //Extract item data
+                    var existingOrderItemsHTML = "";
+                    for(var i = 0; i < _itemJSONArray.items.length; i++){
+                        existingOrderItemsHTML += "<tr><td>1</td><td>" + 
+                            _itemJSONArray.items[i].description + "</td><td>$" +
+                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td><td>$" +
+                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td></tr>";
+                    }
+                    $('#orderItemsTable tbody').html(existingOrderItemsHTML);
                     $('#subtotal').html('$' + parseFloat( _orderJSON.subTotal).toFixed(2));
                     $('#tax').html('$' + parseFloat(_orderJSON.tax).toFixed(2));
                     $('#total').html('$' + parseFloat(_orderJSON.totalPrice).toFixed(2));
@@ -63,7 +72,7 @@
             var _serveType = '${serveType}';
             var _loadType = '${loadType}';
             var _orderJSON = ${orderJSON};
-            
+            var _itemJSONArray = ${itemsJSON};
             
             //sends off update to order in DB...for now this is set up to test one order with uid = 0.
             //also adds to the visible representation of the current order on screen.

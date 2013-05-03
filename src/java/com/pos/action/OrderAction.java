@@ -10,6 +10,7 @@ import com.pos.dao.OrderDAO;
 import com.pos.model.order.CarryoutOrder;
 import com.pos.model.order.DeliveryOrder;
 import com.pos.model.order.DineInOrder;
+import com.pos.model.order.OrderItemInfoEntry;
 import java.util.ArrayList;
 
 /**
@@ -143,5 +144,22 @@ public class OrderAction {
             System.out.println("Error getting dine in order #" + orderId + ": " + e.getMessage());
         }
         return order;
+    }
+    
+    public String getOrderItemInfoJSON(int orderId){
+        String json = "{'items':[";
+        try{
+            ArrayList<OrderItemInfoEntry> list = (ArrayList)orderDAO.getOrderItemInfo(orderId);
+            for(OrderItemInfoEntry entry : list){
+                json += "{'description':'" + entry.getDescription() 
+                        + "','unitPrice':'" + entry.getUnitPrice() + "'},";
+                        
+            }
+            json = json.substring(0, json.length()-1);
+            json += "]}";
+        }catch(DAOException e){
+            System.out.println("Error getting order item info for order #" + orderId + ": " + e.getMessage());
+        }
+        return json;
     }
 }

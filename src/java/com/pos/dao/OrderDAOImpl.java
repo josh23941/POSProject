@@ -7,6 +7,7 @@ package com.pos.dao;
 import com.pos.model.order.CarryoutOrder;
 import com.pos.model.order.DeliveryOrder;
 import com.pos.model.order.DineInOrder;
+import com.pos.model.order.OrderItemInfoEntry;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -37,6 +39,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
     private static final String SERVE_ORDER_SQL = "UPDATE order_ids SET active=0 WHERE order_id=?";
     private static final String GET_ORDER_BY_ID_SQL = "SELECT * FROM order_ids WHERE order_id=?";
+    private static final String GET_ORDER_ITEM_INFO_SQL = "SELECT * FROM orders WHERE order_id=?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -387,6 +390,30 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             closeDBObjects(resultSet,pStatement,connection);
         }
         return order;
+    }
+    
+    @Override
+    public List<OrderItemInfoEntry> getOrderItemInfo(int orderId) throws DAOException{
+        ArrayList<OrderItemInfoEntry> list = new ArrayList<OrderItemInfoEntry>();
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(GET_ORDER_ITEM_INFO_SQL);
+            pStatement.setInt(1, orderId);
+            resultSet = pStatement.executeQuery();
+            while(resultSet.next()){
+                String description = resultSet.getString("item");
+                double unitPrice = resultSet.getDouble("price");
+                OrderItemInfoEntry entry = new OrderItemInfoEntry();
+                entry.setDescription(description);
+                entry.setUnitPrice(unitPrice);
+                list.add(entry);
+            }
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+        return list;
     }
     
 }

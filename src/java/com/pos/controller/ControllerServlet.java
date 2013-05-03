@@ -239,6 +239,7 @@ public class ControllerServlet extends HttpServlet{
                     request.setAttribute("serveType", "dinein");
                 }
             request.setAttribute("loadType", "edit");
+            request.setAttribute("itemsJSON", orderAction.getOrderItemInfoJSON(orderId));
             }
             else{
                 orderId = orderAction.startNewOrder();

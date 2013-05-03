@@ -4,7 +4,6 @@
  */
 package com.pos.dao;
 
-import com.pos.model.menu.MenuCategory;
 import com.pos.model.menu.MenuItem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
