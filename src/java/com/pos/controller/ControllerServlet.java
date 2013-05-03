@@ -293,7 +293,7 @@ public class ControllerServlet extends HttpServlet{
                 order.setAddress(request.getParameter("address"));
                 order.setPhoneNumber(request.getParameter("phone"));
                 order.setWantTime(request.getParameter("wantTime"));
-                order.setTimeStamp(Long.parseLong(request.getParameter("time")));
+                order.setTimeStamp(Long.parseLong(request.getParameter("time")));                
                 orderAction.completeOrder(order);
             }
             else if(serveType.equals("carryout")){

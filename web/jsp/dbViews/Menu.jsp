@@ -130,11 +130,18 @@
                //also need form validation...fire alert if fields missing.
                var request = new XMLHttpRequest();
                var orderId = $('#orderIdCell').html();
+               var time;
+               if (_loadType == 'edit'){
+                   time = _orderJSON.timeStamp;
+               }
+               else{
+                   time = $.now();
+               }               
                var paramString = "orderId=" + orderId +
                    "&subtotal=" + $('#subtotal').html().substr(1) +
                    "&tax=" + $('#tax').html().substr(1) +
                    "&total=" + $('#total').html().substr(1) +
-                   "&time=" + $.now();
+                   "&time=" + time + "&loadType=" + _loadType;
                var serve = _serveType;
                if(serve == 'delivery'){
                    paramString += 
@@ -166,6 +173,7 @@
                });
                //Reset everything for next order
                resetFields();
+               _loadType = 'new';
             }
             
             function cancelOrder(){
