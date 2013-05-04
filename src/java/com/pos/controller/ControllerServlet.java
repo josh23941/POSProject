@@ -326,15 +326,24 @@ public class ControllerServlet extends HttpServlet{
         else if (action.equals("view_orders")){
             //ACTION:
             OrderAction orderAction = new OrderAction();
-            ArrayList<DeliveryOrder> deliveryOrders = orderAction.getDeliveryOrders(true);
-            ArrayList<CarryoutOrder> carryoutOrders = orderAction.getCarryoutOrders(true);
-            ArrayList<DineInOrder> dineInOrders = orderAction.getDineInOrders(true);
+            ArrayList<DeliveryOrder> deliveryOrders;
+            ArrayList<CarryoutOrder> carryoutOrders;
+            ArrayList<DineInOrder> dineInOrders;
+            if(request.getParameter("type").equals("active")){
+                deliveryOrders = orderAction.getDeliveryOrders(true);
+                carryoutOrders = orderAction.getCarryoutOrders(true);
+                dineInOrders = orderAction.getDineInOrders(true);
+                dispatchUrl = "jsp/dbViews/activeOrders.jsp";
+            }
+            else{
+                deliveryOrders = orderAction.getDeliveryOrders(false);
+                carryoutOrders = orderAction.getCarryoutOrders(false);
+                dineInOrders = orderAction.getDineInOrders(false);
+                dispatchUrl = "jsp/dbViews/ServedOrders.jsp";
+            }
             request.setAttribute("deliveryOrders", deliveryOrders);
             request.setAttribute("carryoutOrders", carryoutOrders);
             request.setAttribute("dineInOrders", dineInOrders);
-            
-            //DISPATCH:
-            dispatchUrl = "jsp/dbViews/activeOrders.jsp";
         }
         
         else if (action.equals("cancel_order")){
