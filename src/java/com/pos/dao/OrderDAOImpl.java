@@ -22,7 +22,7 @@ import java.util.List;
  * @author Josh
  */
 public class OrderDAOImpl extends BaseDAO implements OrderDAO{
-    private static final String ADD_ITEM_TO_ORDER_SQL = "INSERT INTO orders VALUES (?,?,?)";
+    private static final String ADD_ITEM_TO_ORDER_SQL = "INSERT INTO orders VALUES (?,?,?,?)";
     private static final String CREATE_ORDER_SQL = "INSERT INTO order_ids VALUES (?,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1)";
     private static final String GET_ORDER_IDS_SQL = "SELECT order_id from order_ids";
     private static final String COMPLETE_DELIVERY_ORDER_SQL = "UPDATE order_ids SET " + 
@@ -40,6 +40,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String SERVE_ORDER_SQL = "UPDATE order_ids SET active=0 WHERE order_id=?";
     private static final String GET_ORDER_BY_ID_SQL = "SELECT * FROM order_ids WHERE order_id=?";
     private static final String GET_ORDER_ITEM_INFO_SQL = "SELECT * FROM orders WHERE order_id=?";
+    private static final String REMOVE_ITEM_FROM_ORDER_SQL = "DELETE FROM orders WHERE order_id=? AND item_index=?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;
@@ -78,13 +79,14 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     }
     
     @Override
-    public void addItem(int uid, String name, double price) throws DAOException{
+    public void addItem(int uid, String name, double price, int itemIndex) throws DAOException{
         try{
             connection = getConnection();
             pStatement = connection.prepareStatement(ADD_ITEM_TO_ORDER_SQL);
             pStatement.setInt(1, uid);
             pStatement.setString(2, name);
             pStatement.setDouble(3, price);
+            pStatement.setInt(4, itemIndex);
             pStatement.execute();
         }catch(SQLException e){
             throw new DAOException(e.getMessage());
@@ -403,9 +405,11 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             while(resultSet.next()){
                 String description = resultSet.getString("item");
                 double unitPrice = resultSet.getDouble("price");
+                int itemIndex = resultSet.getInt("itemIndex");
                 OrderItemInfoEntry entry = new OrderItemInfoEntry();
                 entry.setDescription(description);
                 entry.setUnitPrice(unitPrice);
+                entry.setItemIndex(itemIndex);
                 list.add(entry);
             }
         }catch(SQLException e){
@@ -415,5 +419,19 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
         }
         return list;
     }
-    
+
+    @Override
+    public void removeItemFromOrder(int orderId, int itemIndex) throws DAOException {
+        try{
+            connection = getConnection();
+            pStatement = connection.prepareStatement(REMOVE_ITEM_FROM_ORDER_SQL);
+            pStatement.setInt(1,orderId);
+            pStatement.setInt(2,itemIndex);
+            pStatement.execute();
+        }catch(SQLException e){
+            throw new DAOException(e.getMessage());
+        }finally{
+            closeDBObjects(resultSet,pStatement,connection);
+        }
+    }
 }

@@ -32,10 +32,14 @@
                     //Extract item data
                     var existingOrderItemsHTML = "";
                     for(var i = 0; i < _itemJSONArray.items.length; i++){
-                        existingOrderItemsHTML += "<tr><td>1</td><td>" + 
+                        existingOrderItemsHTML += "<tr><td style=\"display:none;\">" + 
+                            _itemJSONArray.items[i].itemIndex + "</td><td>1</td><td>" + 
                             _itemJSONArray.items[i].description + "</td><td>$" +
                             parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td><td>$" +
                             parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td></tr>";
+                        if(_itemCount < _itemJSONArray.items[i].itemIndex){
+                            _itemCount = _itemJSONArray.items[i].itemIndex;
+                        }
                     }
                     $('#orderItemsTable tbody').html(existingOrderItemsHTML);
                     $('#subtotal').html('$' + parseFloat( _orderJSON.subTotal).toFixed(2));
@@ -73,13 +77,14 @@
             var _loadType = '${loadType}';
             var _orderJSON = ${orderJSON};
             var _itemJSONArray = ${itemsJSON};
+            var _itemCount = 0;
             
             //sends off update to order in DB...for now this is set up to test one order with uid = 0.
             //also adds to the visible representation of the current order on screen.
             function addItemToOrder(name, price){
                 var request = new XMLHttpRequest();
                 var orderId = $('#orderIdCell').html();
-                var paramString = "itemName=" + name + "&uid=" + orderId + "&price=" + price;
+                var paramString = "itemName=" + name + "&uid=" + orderId + "&price=" + price +"&index=" + _itemCount;
                 request.open("POST", "update_order", true);
                 request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 request.setRequestHeader("Content-length", paramString.length);
@@ -87,10 +92,11 @@
                 request.send(paramString);
                 //code for building the visual order representation which is separate from the actual DB entry.
                 //may want to make sure DB was updated by checking status of AJAX request?
-                $('#orderItemsTable tbody:last').append('<tr><td class="qty">1</td><td class="name">' 
+                $('#orderItemsTable tbody:last').append('<tr><td style=\"display:none;\">'+ _itemCount + '</td><td class="qty">1</td><td class="name">' 
                     + name + '</td><td class="unitPrice">$' + parseFloat(price).toFixed(2) + '</td><td class="priceWithQty">$' 
                     + parseFloat(price).toFixed(2) + '</td>');
                 updateTotalsBox(price);
+                _itemCount++;
             }
             
             function updateTotalsBox(price){

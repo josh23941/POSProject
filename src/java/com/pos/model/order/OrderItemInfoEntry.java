@@ -11,6 +11,7 @@ package com.pos.model.order;
 public class OrderItemInfoEntry {
     private String description;
     private double unitPrice;
+    private int itemIndex;
     
     public OrderItemInfoEntry(){}
 
@@ -28,6 +29,14 @@ public class OrderItemInfoEntry {
 
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public int getItemIndex() {
+        return itemIndex;
+    }
+
+    public void setItemIndex(int itemIndex) {
+        this.itemIndex = itemIndex;
     }
     
     

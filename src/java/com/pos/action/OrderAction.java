@@ -28,9 +28,9 @@ public class OrderAction {
         }
     }
     
-    public void addItemToOrder(int uid, String item, double price){
+    public void addItemToOrder(int uid, String item, double price, int itemIndex){
         try{
-            orderDAO.addItem(uid, item, price);
+            orderDAO.addItem(uid, item, price, itemIndex);
         }catch(DAOException e){
             System.out.println("Error adding item to order: " + e.getMessage());
         }
@@ -152,10 +152,12 @@ public class OrderAction {
             ArrayList<OrderItemInfoEntry> list = (ArrayList)orderDAO.getOrderItemInfo(orderId);
             for(OrderItemInfoEntry entry : list){
                 json += "{'description':'" + entry.getDescription() 
-                        + "','unitPrice':'" + entry.getUnitPrice() + "'},";
-                        
+                        + "','unitPrice':'" + entry.getUnitPrice() 
+                        + "','itemIndex':'" + entry.getItemIndex() + "'},";
             }
-            json = json.substring(0, json.length()-1);
+            if(!list.isEmpty()){
+                json = json.substring(0, json.length()-1);
+            }
             json += "]}";
         }catch(DAOException e){
             System.out.println("Error getting order item info for order #" + orderId + ": " + e.getMessage());

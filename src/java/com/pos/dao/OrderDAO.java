@@ -16,7 +16,7 @@ import java.util.List;
  * @author Josh
  */
 public interface OrderDAO {
-    public void addItem(int uid, String name, double price) throws DAOException;
+    public void addItem(int uid, String name, double price, int itemIndex) throws DAOException;
     public int createOrder() throws DAOException;
     public void cancelOrder(int orderId) throws DAOException;
     public void completeOrder(DeliveryOrder order) throws DAOException;
@@ -30,4 +30,5 @@ public interface OrderDAO {
     public CarryoutOrder getCarryoutOrder(int orderId) throws DAOException;
     public DineInOrder getDineInOrder(int orderId) throws DAOException;
     public List<OrderItemInfoEntry> getOrderItemInfo(int orderId) throws DAOException;
+    public void removeItemFromOrder(int orderId, int itemIndex) throws DAOException;
 }

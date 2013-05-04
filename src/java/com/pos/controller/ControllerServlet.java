@@ -244,6 +244,8 @@ public class ControllerServlet extends HttpServlet{
             else{
                 orderId = orderAction.startNewOrder();
                 request.setAttribute("loadType", "new");
+                request.setAttribute("itemsJSON", "''");
+                request.setAttribute("orderJSON", "''");
             }
             request.setAttribute("orderId", orderId);
             //DISPATCH:
@@ -256,7 +258,8 @@ public class ControllerServlet extends HttpServlet{
             int uid = Integer.parseInt(request.getParameter("uid"));
             String item = request.getParameter("itemName");
             double price = Double.parseDouble(request.getParameter("price"));
-            orderAction.addItemToOrder(uid, item, price);
+            int itemIndex = Integer.parseInt(request.getParameter("index"));
+            orderAction.addItemToOrder(uid, item, price, itemIndex);
             //possibly build model object for orderupdate?
             //pull post data from request put in ^ object
             //execute the correct DB operation using the action object
