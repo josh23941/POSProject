@@ -365,19 +365,7 @@ public class ControllerServlet extends HttpServlet{
             OrderAction orderAction = new OrderAction();
             orderAction.removeItemFromOrder(orderId, itemIndex);
         }
-        //for static resources
-        else if (action.equals("gettheme.js") || 
-                 action.equals("jqx.base.css") ||
-                 action.equals("jquery-1.8.3.min.js") ||
-                 action.equals("jqxcore.js") ||
-                 action.equals("jqxlistment.js") ||
-                 action.equals("jqxbuttons.js") ||
-                 action.equals("placeOrder.css") ||
-                 action.equals("orderList.js") ||
-                 action.equals("menuFunctions.js")
-                 ){
-            dispatchUrl = "jsp/dbViews/" + action;
-        }
+       
         if(dispatchUrl != null){
             RequestDispatcher rd = request.getRequestDispatcher(dispatchUrl);
             rd.forward(request, response);
