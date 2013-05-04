@@ -32,13 +32,17 @@
                     //Extract item data
                     var existingOrderItemsHTML = "";
                     for(var i = 0; i < _itemJSONArray.items.length; i++){
-                        existingOrderItemsHTML += "<tr><td style=\"display:none;\">" + 
-                            _itemJSONArray.items[i].itemIndex + "</td><td>1</td><td>" + 
+                        var itemIndex = _itemJSONArray.items[i].itemIndex;
+                        existingOrderItemsHTML += "<tr id=\"item" + itemIndex + "\"><td style=\"display:none;\">" + 
+                            itemIndex + "</td><td>1</td><td>" + 
                             _itemJSONArray.items[i].description + "</td><td>$" +
-                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td><td>$" +
-                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td></tr>";
-                        if(_itemCount < _itemJSONArray.items[i].itemIndex){
-                            _itemCount = _itemJSONArray.items[i].itemIndex;
+                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + "</td><td class=\"priceWithQty\">$" +
+                            parseFloat(_itemJSONArray.items[i].unitPrice).toFixed(2) + 
+                            "</td><td><input type=\"button\" value=\"Remove\" onclick=\"javascript:removeItem(\'" 
+                            + itemIndex + "\')\"/></td></tr>";
+                        //this ensures an additional items start from highest index regardless of itemCount (could happen when removing items and editing to add more)
+                        if(_itemCount < itemIndex){
+                            _itemCount = itemIndex;
                         }
                     }
                     $('#orderItemsTable tbody').html(existingOrderItemsHTML);
@@ -92,17 +96,19 @@
                 request.send(paramString);
                 //code for building the visual order representation which is separate from the actual DB entry.
                 //may want to make sure DB was updated by checking status of AJAX request?
-                $('#orderItemsTable tbody:last').append('<tr><td style=\"display:none;\">'+ _itemCount + '</td><td class="qty">1</td><td class="name">' 
+                $('#orderItemsTable tbody:last').append('<tr id=\"item' + _itemCount + '\"><td style=\"display:none;\">'+ _itemCount + '</td><td class="qty">1</td><td class="name">' 
                     + name + '</td><td class="unitPrice">$' + parseFloat(price).toFixed(2) + '</td><td class="priceWithQty">$' 
-                    + parseFloat(price).toFixed(2) + '</td>');
-                updateTotalsBox(price);
+                    + parseFloat(price).toFixed(2) + '</td><td><input type=\"button\" value=\"Remove\" onclick=\"javascript:removeItem(\''+ _itemCount + '\')\"/></td>(</tr>');
+                updateTotalsBox();
                 _itemCount++;
             }
             
-            function updateTotalsBox(price){
+            function updateTotalsBox(){
                 var taxRate = .0725;
-                subtotal = parseFloat($('#subtotal').html().substr(1));
-                subtotal += parseFloat(price);
+                var subtotal = 0;
+                $('.priceWithQty').each(function(){
+                    subtotal += parseFloat($(this).html().substr(1));
+                });
                 $('#subtotal').html('$' + subtotal.toFixed(2));
                 var tax = subtotal * taxRate;
                 $('#tax').html('$' + tax.toFixed(2));
@@ -204,6 +210,18 @@
                 $('#deliveryForm').hide();
                 $('#dineInForm').hide();
                 _serveType = "";
+            }
+            
+            function removeItem(itemIndex){
+                $.ajax({
+                   url: 'remove_item',
+                   asynch: true,
+                   type: 'POST',
+                   data: 'orderId=' + $('#orderIdCell').html() +
+                         '&itemIndex=' + itemIndex
+                });
+                $('#item' + itemIndex).remove();
+                updateTotalsBox();
             }
         </script>
     </head>

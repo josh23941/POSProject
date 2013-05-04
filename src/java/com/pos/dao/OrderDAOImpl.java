@@ -40,7 +40,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String SERVE_ORDER_SQL = "UPDATE order_ids SET active=0 WHERE order_id=?";
     private static final String GET_ORDER_BY_ID_SQL = "SELECT * FROM order_ids WHERE order_id=?";
     private static final String GET_ORDER_ITEM_INFO_SQL = "SELECT * FROM orders WHERE order_id=?";
-    private static final String REMOVE_ITEM_FROM_ORDER_SQL = "DELETE FROM orders WHERE order_id=? AND item_index=?";
+    private static final String REMOVE_ITEM_FROM_ORDER_SQL = "DELETE FROM orders WHERE order_id=? AND itemIndex=?";
     private Connection connection = null;
     private PreparedStatement pStatement = null;
     private ResultSet resultSet = null;

@@ -164,4 +164,12 @@ public class OrderAction {
         }
         return json;
     }
+    
+    public void removeItemFromOrder(int orderId, int itemIndex){
+        try{
+            orderDAO.removeItemFromOrder(orderId, itemIndex);
+        }catch(DAOException e){
+            System.out.println("Error removing item " + itemIndex + " from order #" + orderId + ": " + e.getMessage());
+        }
+    }
 }
