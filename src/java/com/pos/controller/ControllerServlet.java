@@ -372,7 +372,9 @@ public class ControllerServlet extends HttpServlet{
                  action.equals("jqxcore.js") ||
                  action.equals("jqxlistment.js") ||
                  action.equals("jqxbuttons.js") ||
-                 action.equals("placeOrder.css")
+                 action.equals("placeOrder.css") ||
+                 action.equals("orderList.js") ||
+                 action.equals("menuFunctions.js")
                  ){
             dispatchUrl = "jsp/dbViews/" + action;
         }
