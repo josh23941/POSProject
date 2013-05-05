@@ -11,9 +11,18 @@ package com.pos.model.order;
 public class DineInOrder extends Order{
     
     private int tableNumber;
+    private int militaryWantTime;
     
     public DineInOrder(){}
-
+    
+    public int getMilitaryWantTime(){
+        return militaryWantTime;
+    }
+    
+    public void setMilitaryWantTime(int militaryWantTime){
+        this.militaryWantTime = militaryWantTime;
+    }
+    
     public int getTableNumber() {
         return tableNumber;
     }
@@ -29,6 +38,7 @@ public class DineInOrder extends Order{
                 "'tax':'" + this.getTax() + "'," + 
                 "'timeStamp':'" + this.getTimeStamp() + "'," +
                 "'humanReadableTime':'" + this.getHumanReadableTime() + "'," +
-                "'table':'" + this.getTableNumber() + "'}";              
+                "'table':'" + this.getTableNumber() + "'," +
+                "'mWantTime':'" + this.getMilitaryWantTime() + "'}";             
     }
 }

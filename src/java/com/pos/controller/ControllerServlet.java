@@ -17,6 +17,7 @@ import com.pos.form.MenuCategoryForm;
 import com.pos.form.MenuItemForm;
 import com.pos.model.menu.*;
 import com.pos.model.user.User;
+import com.pos.util.TimeUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -295,7 +296,14 @@ public class ControllerServlet extends HttpServlet{
                 order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
                 order.setAddress(request.getParameter("address"));
                 order.setPhoneNumber(request.getParameter("phone"));
-                order.setWantTime(request.getParameter("wantTime"));
+                if(!request.getParameter("wantTime").equals("ASAP")){
+                    order.setMilitaryWantTime(Integer.parseInt(request.getParameter("wantTime")));
+                    order.setWantTime(TimeUtil.militaryToStringTime(request.getParameter("wantTime")));
+                }
+                else{
+                    order.setMilitaryWantTime(-1);
+                    order.setWantTime("ASAP");
+                }
                 order.setTimeStamp(Long.parseLong(request.getParameter("time")));                
                 orderAction.completeOrder(order);
             }
@@ -307,7 +315,14 @@ public class ControllerServlet extends HttpServlet{
                 order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
                 order.setName(request.getParameter("name"));
                 order.setPhoneNumber(request.getParameter("phone"));
-                order.setWantTime(request.getParameter("wantTime"));
+                if(!request.getParameter("wantTime").equals("ASAP")){
+                    order.setMilitaryWantTime(Integer.parseInt(request.getParameter("wantTime")));
+                    order.setWantTime(TimeUtil.militaryToStringTime(request.getParameter("wantTime")));
+                }
+                else{
+                    order.setMilitaryWantTime(-1);
+                    order.setWantTime("ASAP");
+                }
                 order.setTimeStamp(Long.parseLong(request.getParameter("time")));
                 orderAction.completeOrder(order);
             }
@@ -319,6 +334,7 @@ public class ControllerServlet extends HttpServlet{
                 order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
                 order.setTableNumber(Integer.parseInt(request.getParameter("table")));
                 order.setTimeStamp(Long.parseLong(request.getParameter("time")));
+                order.setMilitaryWantTime(-1);
                 orderAction.completeOrder(order);
             }
         }

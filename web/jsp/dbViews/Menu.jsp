@@ -67,16 +67,72 @@
                     <br>
                     <!-- Begin delivery form -->
                     <table id="deliveryForm" style="display:none;">
-                        <tr><td><label class="deliveryForm">Address: </label></td><td><input id="delAddr" class="deliveryForm" type="text" name="address"></td></tr>
-                        <tr><td><label class="deliveryForm">Phone Number: </label></td><td><input id="delPhone" class="deliveryForm" type="text" name="phone"></td></tr>
-                        <tr><td><label class="deliveryForm">Delivery Time: </label></td><td><input id="delTime" class="deliveryForm" type="text" name="dtime"></td></tr>
+                        <tr>
+                            <td>
+                                <label class="deliveryForm">Address: </label>
+                            </td>
+                            <td>
+                                <input id="delAddr" class="deliveryForm" type="text" name="address">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="deliveryForm">Phone Number: </label>
+                            </td>
+                            <td>
+                                <input id="delPhone" class="deliveryForm" type="text" name="phone">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="deliveryForm">Delivery Time:</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" checked id="delTime" class="deliveryForm" onclick="javascript:showTimeInput(this)"/>ASAP
+                                <span id="delTimeInfo" style="display:none;"><input size="2" maxlength="2" type="text" id="delHour"/>:
+                                <input size="2" maxlength="2" type="text" id="delMins"/>
+                                <select id="delAmPm">
+                                    <option>AM</option>
+                                    <option>PM</option>
+                                </select></span>
+                            </td>
+                        </tr>
                     </table>
+                    
                     <!-- Begin Carry Out Form -->
                     <table id="carryOutForm" style="display:none;">
-                        <tr><td><label class="carryOutForm">Name: </label></td><td><input id="coname" class="carryOutForm" type="text" name="name"></td></tr>
-                        <tr><td><label class="carryOutForm">Phone Number: </label></td><td><input id="cophone" class="carryOutForm" type="text" name="phone"></td></tr>
-                        <tr><td><label class="carryOutForm">Pick Up Time: </label></td><td><input id="cotime" class="carryOutForm" type="text" name="cotime"></td></tr>
+                        <tr>
+                            <td>
+                                <label class="carryOutForm">Name: </label>
+                            </td>
+                            <td>
+                                <input id="coname" class="carryOutForm" type="text" name="name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="carryOutForm">Phone Number: </label>
+                            </td>
+                            <td>
+                                <input id="cophone" class="carryOutForm" type="text" name="phone">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="carryOutForm">Pick Up Time: </label>
+                            </td>
+                            <td>
+                                <input type="checkbox" checked id="cotime" class="carryOutForm" onclick="javascript:showTimeInput(this)"/>ASAP
+                                <span id="coTimeInfo" style="display:none;"><input size="2" maxlength="2" type="text" id="coHour"/>:
+                                <input size="2" maxlength="2" type="text" id="coMins"/>
+                                <select id="coAmPm">
+                                    <option>AM</option>
+                                    <option>PM</option>
+                                </select></span>
+                            </td>
+                        </tr>
                     </table>
+                    
                     <!-- Begin Dine In Form -->
                     <table id="dineInForm" style="display:none;">
                         <tr><td><label class="dineInForm">Table Number: </label></td><td><input id="ditable" class="dineInForm" type="text" name="tableNumber"></td></tr>

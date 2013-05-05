@@ -31,13 +31,25 @@ $(document).ready(function(){
                         case 'delivery':{
                             $('#delAddr').val(_orderJSON.address);
                             $('#delPhone').val(_orderJSON.phone);
-                            $('#delTime').val(_orderJSON.wantTime);
+                            //$('#delTime').val(_orderJSON.wantTime);
+                            if(_orderJSON.wantTime != 'ASAP'){
+                                //uncheck ASAP fill in form
+                                $('#delTime').attr('checked', false);
+                                $('#delTimeInfo').show();
+                                fillInTimeFields("#delHour", "#delMins", "#delAmPm");
+                            }
                             break;
                         }
                         case 'carryout':{
                             $('#coname').val(_orderJSON.name);
                             $('#cophone').val(_orderJSON.phone);
-                            $('#cotime').val(_orderJSON.wantTime);
+                            //$('#cotime').val(_orderJSON.wantTime);
+                            if(_orderJSON.wantTime != 'ASAP'){
+                                //uncheck ASAP fill in form
+                                $('#cotime').attr('checked', false);
+                                $('#coTimeInfo').show();
+                                fillInTimeFields("#coHour", "#coMins", "#coAmPm");
+                            }
                             break;
                         }
                         case 'dinein':{
@@ -134,14 +146,14 @@ $(document).ready(function(){
                    paramString += 
                        "&address=" + $('#delAddr').val() +
                        "&phone=" + $('#delPhone').val() +
-                       "&wantTime=" + $('#delTime').val() +
+                       "&wantTime=" + getWantTime() +
                        "&serveType=delivery";    
                }
                else if(serve == 'carryout'){
                    paramString += 
                        "&name=" + $('#coname').val() +
                        "&phone=" + $('#cophone').val() +
-                       "&wantTime=" + $('#cotime').val() +
+                       "&wantTime=" + getWantTime() +
                        "&serveType=carryout";
                }
                else if(serve == 'dinein'){
@@ -184,6 +196,8 @@ $(document).ready(function(){
                 $('#carryOutForm').hide();
                 $('#deliveryForm').hide();
                 $('#dineInForm').hide();
+                $('#delTime, #cotime').attr('checked', true);
+                $('#delTimeInfo, #coTimeInfo').hide();
                 _serveType = "";
             }
             
@@ -197,4 +211,71 @@ $(document).ready(function(){
                 });
                 $('#item' + itemIndex).remove();
                 updateTotalsBox();
+            }
+            
+            function showTimeInput(t){
+                if(t.checked){
+                    if(t.id == 'delTime'){
+                        $('#delTimeInfo').hide();
+                    }
+                    else{
+                        $('#coTimeInfo').hide();
+                    }
+                }
+                else{
+                    if(t.id == 'delTime'){
+                        $('#delTimeInfo').show();
+                    }
+                    else{
+                        $('#coTimeInfo').show();
+                    }
+                }
+            }
+            
+            function getWantTime(){
+                var hours, mins, ampm, timeString;
+                var time = "ASAP";
+                if(_serveType == 'delivery'){
+                    if(!$('#delTime').is(':checked')){
+                        hours = Number($('#delHour').val()) * 100;
+                        if(hours == 1200){
+                            hours = 0;
+                        }
+                        mins = Number($('#delMins').val());
+                        ampm = $('#delAmPm').val();
+                        time = hours + mins;
+                    }
+                }
+                else{
+                    if(!$('#cotime').is(':checked')){
+                        hours = Number($('#coHour').val()) * 100;
+                        if(hours == 1200){
+                            hours = 0;
+                        }
+                        mins = Number($('#coMins').val());
+                        ampm = $('#coAmPm').val();
+                        time = hours + mins;
+                    }
+                }
+                if(ampm == 'PM' && time != "ASAP"){
+                    time += 1200;
+                }
+                timeString = String(time);
+                if(timeString.length == 2){
+                    timeString = '0' + timeString;
+                    time = timeString;
+                }
+                if(timeString.length == 1){
+                    timeString = '00' + timeString;
+                    time = timeString;
+                }
+                return time;        
+            }
+            
+            function fillInTimeFields(hourField, minField, amPmField){
+                $(amPmField).val(_orderJSON.wantTime.substring(_orderJSON.wantTime.length-2));
+                var remainingString = _orderJSON.wantTime.substring(0, _orderJSON.wantTime.length-2);
+                $(minField).val(remainingString.substring(remainingString.length-2));
+                remainingString = remainingString.substring(0,remainingString.length-3);
+                $(hourField).val(remainingString);
             }

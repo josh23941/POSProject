@@ -4,6 +4,8 @@
  */
 package com.pos.model.order;
 
+import com.pos.util.TimeUtil;
+
 /**
  *
  * @author Josh
@@ -13,11 +15,20 @@ public class CarryoutOrder extends Order{
     private String name;
     private String phoneNumber;
     private String wantTime;
+    private int militaryWantTime;
     
     public CarryoutOrder(){
         
     }
 
+    public int getMilitaryWantTime() {
+        return militaryWantTime;
+    }
+
+    public void setMilitaryWantTime(int militaryWantTime) {
+        this.militaryWantTime = militaryWantTime;
+    }
+    
     public String getName() {
         return name;
     }
@@ -29,7 +40,7 @@ public class CarryoutOrder extends Order{
     public String getWantTime() {
         return wantTime;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
@@ -51,6 +62,7 @@ public class CarryoutOrder extends Order{
                 "'humanReadableTime':'" + this.getHumanReadableTime() + "'," +
                 "'name':'" + this.getName() + "'," +
                 "'phone':'" + this.getPhoneNumber() + "'," +
-                "'wantTime':'" + this.getWantTime() + "'}";              
+                "'wantTime':'" + this.getWantTime() + "'," +
+                "'mWantTime':'" + this.getMilitaryWantTime() + "'}";              
     }
 }
