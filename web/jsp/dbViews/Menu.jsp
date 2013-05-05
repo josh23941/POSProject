@@ -14,11 +14,13 @@
         <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
         <script type="text/javascript" src="/POSProject/resources/gettheme.js"></script>
         <link rel="stylesheet" href="/POSProject/resources/jqx.base.css" type="text/css" />
-        <link rel="sytlesheet" href="/POSProject/resources/placeOrder.css" type="text/css" />
+        <!--<link rel="stylesheet" href="/POSProject/resources/placeOrder.css" type="text/css" />-->
         <script type="text/javascript" src="/POSProject/resources/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="/POSProject/resources/jqxcore.js"></script>
         <script type="text/javascript" src="/POSProject/resources/jqxlistmenu.js"></script>
         <script type="text/javascript" src="/POSProject/resources/jqxbuttons.js"></script>
+        <script type="text/javascript" src="/POSProject/resources/jqueryui.js"></script>
+        <link rel="stylesheet" type="text/css" href="/POSProject/resources/jqueryuicss.css"/>
         <script type="text/javascript">
             var _serveType = '${serveType}';
             var _loadType = '${loadType}';
@@ -94,7 +96,8 @@
                                 <select id="delAmPm">
                                     <option>AM</option>
                                     <option>PM</option>
-                                </select></span>
+                                </select>
+                                Date:<input type="text" size="10" maxlength="10" id="delDatePicker"/></span>
                             </td>
                         </tr>
                     </table>
@@ -128,7 +131,8 @@
                                 <select id="coAmPm">
                                     <option>AM</option>
                                     <option>PM</option>
-                                </select></span>
+                                </select>
+                                Date:<input type="text" size="10" maxlength="10" id="coDatePicker"/></span>
                             </td>
                         </tr>
                     </table>

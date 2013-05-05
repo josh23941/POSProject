@@ -296,6 +296,7 @@ public class ControllerServlet extends HttpServlet{
                 order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
                 order.setAddress(request.getParameter("address"));
                 order.setPhoneNumber(request.getParameter("phone"));
+                order.setWantDate(request.getParameter("wantDate"));
                 if(!request.getParameter("wantTime").equals("ASAP")){
                     order.setMilitaryWantTime(Integer.parseInt(request.getParameter("wantTime")));
                     order.setWantTime(TimeUtil.militaryToStringTime(request.getParameter("wantTime")));
@@ -315,6 +316,7 @@ public class ControllerServlet extends HttpServlet{
                 order.setTotalPrice(Double.parseDouble(request.getParameter("total")));
                 order.setName(request.getParameter("name"));
                 order.setPhoneNumber(request.getParameter("phone"));
+                order.setWantDate(request.getParameter("wantDate"));
                 if(!request.getParameter("wantTime").equals("ASAP")){
                     order.setMilitaryWantTime(Integer.parseInt(request.getParameter("wantTime")));
                     order.setWantTime(TimeUtil.militaryToStringTime(request.getParameter("wantTime")));

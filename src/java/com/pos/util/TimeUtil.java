@@ -32,14 +32,21 @@ public class TimeUtil {
             }
         }
     }
-    /*
-    public static void main(String[]  args){
-        System.out.println(TimeUtil.militaryToStringTime("000"));
-        System.out.println(TimeUtil.militaryToStringTime("1200"));
-        System.out.println(TimeUtil.militaryToStringTime("1201"));
-        System.out.println(TimeUtil.militaryToStringTime("2300"));
-        
+    
+    public static String getMySQLDateFormat(String rawDate){
+        String[] splits = rawDate.split("/");
+        return splits[2] + "-" + splits[0] + "-" + splits[1];
     }
     
+    public static String getThisAppDateFormat(String rawDate){
+        String[] splits = rawDate.split("-");
+        return splits[1] + "/" + splits[2] + "/" + splits[0];
+    }
+    /*
+    public static void main(String[] args){
+        System.out.println(TimeUtil.getMySQLDateFormat("05/13/2013"));
+        
+    }
     */
+    
 }

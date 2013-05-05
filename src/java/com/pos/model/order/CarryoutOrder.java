@@ -16,11 +16,20 @@ public class CarryoutOrder extends Order{
     private String phoneNumber;
     private String wantTime;
     private int militaryWantTime;
+    private String wantDate;
     
     public CarryoutOrder(){
         
     }
 
+    public void setWantDate(String wantDate) {
+        this.wantDate = wantDate;
+    }
+
+    public String getWantDate() {
+        return wantDate;
+    }
+    
     public int getMilitaryWantTime() {
         return militaryWantTime;
     }
@@ -63,6 +72,7 @@ public class CarryoutOrder extends Order{
                 "'name':'" + this.getName() + "'," +
                 "'phone':'" + this.getPhoneNumber() + "'," +
                 "'wantTime':'" + this.getWantTime() + "'," +
-                "'mWantTime':'" + this.getMilitaryWantTime() + "'}";              
+                "'mWantTime':'" + this.getMilitaryWantTime() + "'," + 
+                "'wantDate':'" + this.getWantDate() + "'}";              
     }
 }

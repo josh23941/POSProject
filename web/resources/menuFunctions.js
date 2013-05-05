@@ -6,6 +6,12 @@ $(document).ready(function(){
                                         showHeader: true,
                                         showBackButton: true,
                                         showFilter: false})
+                
+                //Initialize Datepickers:
+                $('#delDatePicker').datepicker();
+                $('#delDatePicker').datepicker('setDate', new Date());
+                $('#coDatePicker').datepicker();
+                $('#coDatePicker').datepicker('setDate', new Date());
                 if(_loadType == 'edit'){
                     //Extract item data
                     var existingOrderItemsHTML = "";
@@ -37,6 +43,7 @@ $(document).ready(function(){
                                 $('#delTime').attr('checked', false);
                                 $('#delTimeInfo').show();
                                 fillInTimeFields("#delHour", "#delMins", "#delAmPm");
+                                $('#delDatePicker').val(_orderJSON.wantDate);
                             }
                             break;
                         }
@@ -49,6 +56,7 @@ $(document).ready(function(){
                                 $('#cotime').attr('checked', false);
                                 $('#coTimeInfo').show();
                                 fillInTimeFields("#coHour", "#coMins", "#coAmPm");
+                                $('#coDatePicker').val(_orderJSON.wantDate);
                             }
                             break;
                         }
@@ -147,14 +155,16 @@ $(document).ready(function(){
                        "&address=" + $('#delAddr').val() +
                        "&phone=" + $('#delPhone').val() +
                        "&wantTime=" + getWantTime() +
-                       "&serveType=delivery";    
+                       "&serveType=delivery" +
+                       "&wantDate=" + $('#delDatePicker').val();    
                }
                else if(serve == 'carryout'){
                    paramString += 
                        "&name=" + $('#coname').val() +
                        "&phone=" + $('#cophone').val() +
                        "&wantTime=" + getWantTime() +
-                       "&serveType=carryout";
+                       "&serveType=carryout" +
+                       "&wantDate=" + $('#coDatePicker').val();
                }
                else if(serve == 'dinein'){
                    paramString += 
@@ -279,3 +289,6 @@ $(document).ready(function(){
                 remainingString = remainingString.substring(0,remainingString.length-3);
                 $(hourField).val(remainingString);
             }
+            
+            
+            

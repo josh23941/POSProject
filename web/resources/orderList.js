@@ -107,7 +107,7 @@
                             toggle = _nameSortToggle;
                             break;
                         case 'time':
-                            data = $('td:eq(9)', $(this)).text();
+                            data = $('td:eq(10)', $(this)).text();
                             sortMethod = 'numeric';
                             toggle = _timeSortToggle;
                             break;
@@ -117,7 +117,7 @@
                             toggle = _serveSortToggle;
                             break;
                         case 'table':
-                            data = $('td:eq(6)', $(this)).text();
+                            data = $('td:eq(7)', $(this)).text();
                             sortMethod = 'numeric';
                             toggle = _tableSortToggle;
                             break;

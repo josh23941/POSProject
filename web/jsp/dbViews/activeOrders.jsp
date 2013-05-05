@@ -47,7 +47,8 @@
                 <th onclick="javascript:sort('name')" class="delDiNull">Name</th>
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
-                <th class="diNull">Time Wanted</th>
+                <th class="diNull" onclick="javascript:sort('wantTime')">Time Wanted</th>
+                <th class="diNull">Date Wanted</th>
                 <th onclick="javascript:sort('table')" class="delCoNull">Table #</th>
                 <th>Total</th>
                 <th onclick="javascript:sort('time')">Time Ordered</th>
@@ -60,6 +61,7 @@
                                  <td>${order.address}</td>
                                  <td>${order.phoneNumber}</td>
                                  <td>${order.wantTime}</td>
+                                 <td>${order.wantDate}</td>
                                  <td class=\"delCoNull\">---</td>
                                  <td>$${order.totalPrice}</td>
                                  <td>${order.humanReadableTime}</td>
@@ -84,6 +86,7 @@
                                 <td class=\"coDiNull\">---</td>
                                 <td>${order.phoneNumber}</td>
                                 <td>${order.wantTime}</td>
+                                <td>${order.wantDate}</td>
                                 <td class=\"delCoNull\">---</td>
                                 <td>$${order.totalPrice}</td>
                                 <td>${order.humanReadableTime}</td>
@@ -108,6 +111,7 @@
                                 <td>Dine In</td>
                                 <td class=\"diNull\">---</td>
                                 <td class=\"coDiNull\">---</td>
+                                <td class=\"diNull\">---</td>
                                 <td class=\"diNull\">---</td>
                                 <td class=\"diNull\">---</td>
                                 <td>${order.tableNumber}</td>

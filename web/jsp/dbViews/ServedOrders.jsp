@@ -47,19 +47,53 @@
                 <th onclick="javascript:sort('name')" class="delDiNull">Name</th>
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
-                <th class="diNull">Time Wanted</th>
+                <th class="diNull" onclick="javascript:wantTimeSort()">Time Wanted</th>
+                <th class="diNull">Date Wanted</th>
                 <th onclick="javascript:sort('table')" class="delCoNull">Table #</th>
                 <th>Total</th>
                 <th onclick="javascript:sort('time')">Time Ordered</th>
             </thead>
             <c:forEach var="order" items="${deliveryOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\"><td>${order.orderId}</td><td>Delivery</td><td class=\"delDiNull\">---</td><td>${order.address}</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"del\">
+                       <td>${order.orderId}</td>
+                       <td>Delivery</td>
+                       <td class=\"delDiNull\">---</td>
+                       <td>${order.address}</td>
+                       <td>${order.phoneNumber}</td>
+                       <td>${order.wantTime}</td>
+                       <td>${order.wantDate}</td>
+                       <td class=\"delCoNull\">---</td>
+                       <td>$${order.totalPrice}</td>
+                       <td>${order.humanReadableTime}</td>
+                       <td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${carryoutOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\"><td>${order.orderId}</td><td>Carry Out</td><td>${order.name}</td><td class=\"coDiNull\">---</td><td>${order.phoneNumber}</td><td>${order.wantTime}</td><td class=\"delCoNull\">---</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"co\">
+                       <td>${order.orderId}</td>
+                       <td>Carry Out</td>
+                       <td>${order.name}</td>
+                       <td class=\"coDiNull\">---</td>
+                       <td>${order.phoneNumber}</td>
+                       <td>${order.wantTime}</td>
+                       <td>${order.wantDate}</td>
+                       <td class=\"delCoNull\">---</td>
+                       <td>$${order.totalPrice}</td>
+                       <td>${order.humanReadableTime}</td>
+                       <td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
             <c:forEach var="order" items="${dineInOrders}">
-                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\"><td>${order.orderId}</td><td>Dine In</td><td class=\"diNull\">---</td><td class=\"coDiNull\">---</td><td class=\"diNull\">---</td><td class=\"diNull\">---</td><td>${order.tableNumber}</td><td>$${order.totalPrice}</td><td>${order.humanReadableTime}</td><td style=\"display:none\">${order.timeStamp}</td></tr>"/>
+                <c:out escapeXml="false" value="<tr id=\"${order.orderId}\" class=\"di\">
+                       <td>${order.orderId}</td>
+                       <td>Dine In</td>
+                       <td class=\"diNull\">---</td>
+                       <td class=\"coDiNull\">---</td>
+                       <td class=\"diNull\">---</td>
+                       <td class=\"diNull\">---</td>
+                       <td class=\"diNull\">---</td>
+                       <td>${order.tableNumber}</td>
+                       <td>$${order.totalPrice}</td>
+                       <td>${order.humanReadableTime}</td>
+                       <td style=\"display:none\">${order.timeStamp}</td></tr>"/>
             </c:forEach>
         </table>
     </body>

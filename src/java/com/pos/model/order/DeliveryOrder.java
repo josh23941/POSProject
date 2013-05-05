@@ -16,9 +16,18 @@ public class DeliveryOrder extends Order{
     private String wantTime;
     private String phoneNumber;
     private int militaryWantTime;
+    private String wantDate;
     
     public DeliveryOrder(){}
 
+    public String getWantDate() {
+        return wantDate;
+    }
+
+    public void setWantDate(String wantDate) {
+        this.wantDate = wantDate;
+    }
+    
     public int getMilitaryWantTime() {
         return militaryWantTime;
     }
@@ -61,6 +70,7 @@ public class DeliveryOrder extends Order{
                 "'address':'" + this.getAddress() + "'," +
                 "'phone':'" + this.getPhoneNumber() + "'," +
                 "'wantTime':'" + this.getWantTime() + "'," +
-                "'mWantTime':'" + this.getMilitaryWantTime() + "'}";              
+                "'mWantTime':'" + this.getMilitaryWantTime() + "'," +
+                "'wantDate':'" + this.getWantDate() + "'}";              
     }
 }
