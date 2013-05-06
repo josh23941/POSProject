@@ -48,7 +48,7 @@
                 <th class="coDiNull">Address</th>
                 <th class="diNull">Phone #</th>
                 <th class="diNull" onclick="javascript:sort('wantTime')">Time Wanted</th>
-                <th class="diNull">Date Wanted</th>
+                <th>Date Wanted</th>
                 <th onclick="javascript:sort('table')" class="delCoNull">Table #</th>
                 <th>Total</th>
                 <th onclick="javascript:sort('time')">Time Ordered</th>
@@ -113,7 +113,7 @@
                                 <td class=\"coDiNull\">---</td>
                                 <td class=\"diNull\">---</td>
                                 <td class=\"diNull\">---</td>
-                                <td class=\"diNull\">---</td>
+                                <td>${orders.wantDate}</td>
                                 <td>${order.tableNumber}</td>
                                 <td>$${order.totalPrice}</td>
                                 <td>${order.humanReadableTime}</td>

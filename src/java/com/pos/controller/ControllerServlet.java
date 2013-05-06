@@ -337,6 +337,7 @@ public class ControllerServlet extends HttpServlet{
                 order.setTableNumber(Integer.parseInt(request.getParameter("table")));
                 order.setTimeStamp(Long.parseLong(request.getParameter("time")));
                 order.setMilitaryWantTime(-1);
+                order.setWantDate(request.getParameter("wantDate"));
                 orderAction.completeOrder(order);
             }
         }

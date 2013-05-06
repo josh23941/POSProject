@@ -1,5 +1,5 @@
 $(document).ready(function(){
-                console.log("inside ready function");
+                console.log(new Date());
                 $('#list').jqxListMenu({width:'44%',
                                         enableScrolling: false,
                                         theme: getDemoTheme(),
@@ -167,9 +167,13 @@ $(document).ready(function(){
                        "&wantDate=" + $('#coDatePicker').val();
                }
                else if(serve == 'dinein'){
+                   //use the delDatePicker to pull todays date from since 
+                   //resetting it in case it was messed with.
+                   $('#delDatePicker').datepicker('setDate', new Date());
                    paramString += 
                        "&table=" + $('#ditable').val() +
-                       "&serveType=dinein";
+                       "&serveType=dinein" +
+                       "&wantDate=" + $('#delDatePicker').val();
                }
                request.open('POST', 'complete_order', true);
                request.setRequestHeader("Content-type","application/x-www-form-urlencoded");

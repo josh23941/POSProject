@@ -30,10 +30,10 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
     private static final String COMPLETE_CARRYOUT_ORDER_SQL = "UPDATE order_ids SET " +
             "serveType = ?, name = ?, phone = ?, wantTime = ?, subtotal = ?, tax = ?, total = ?, time = ?, mWantTime = ?, wantDate = ? WHERE order_id = ?";
     private static final String COMPLETE_DINEIN_ORDER_SQL = "UPDATE order_ids SET " +
-            "serveType = ?, tableNumber = ?, subtotal = ?, tax = ?, total = ?, time = ?, mWantTime = ? WHERE order_id = ?";
+            "serveType = ?, tableNumber = ?, subtotal = ?, tax = ?, total = ?, time = ?, mWantTime = ?, wantDate = ? WHERE order_id = ?";
     private static final String GET_DELIVERY_ORDERS_SQL = "SELECT order_id, address, phone, wantTime, tax, subTotal, total, time, mWantTime, wantDate FROM order_ids WHERE serveType=\"delivery\" AND active=?";
     private static final String GET_CARRYOUT_ORDERS_SQL = "SELECT order_id, name, phone, wantTime, tax, subTotal, total, time, mWantTime, wantDate FROM order_ids WHERE serveType=\"carryout\" AND active=?";
-    private static final String GET_DINEIN_ORDERS_SQL = "SELECT order_id, tableNumber, tax, subTotal, total, time, mWantTime FROM order_ids WHERE serveType=\"dinein\" AND active=?";
+    private static final String GET_DINEIN_ORDERS_SQL = "SELECT order_id, tableNumber, tax, subTotal, total, time, mWantTime, wantDate FROM order_ids WHERE serveType=\"dinein\" AND active=?";
     private static final String CANCEL_ORDER_SQL = "DELETE FROM orders WHERE order_id = ?";
     private static final String RESET_ORDER_ID_SQL = "UPDATE order_ids SET " +
             "serveType = NULL, address = NULL, phone = NULL, wantTime = NULL, tableNumber = NULL, subtotal = NULL, tax = NULL, total = NULL, time = NULL WHERE order_id = ?";
@@ -181,7 +181,8 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             pStatement.setDouble(5, order.getTotalPrice());
             pStatement.setLong(6, order.getTimeStamp());
             pStatement.setInt(7, -1);
-            pStatement.setInt(8, order.getOrderId());
+            pStatement.setString(8, TimeUtil.getMySQLDateFormat(order.getWantDate()));
+            pStatement.setInt(9, order.getOrderId());
             pStatement.execute();
         }catch(SQLException e){
             throw new DAOException(e.getMessage());
@@ -288,6 +289,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
                 order.setTotalPrice(resultSet.getDouble("total"));
                 order.setTimeStamp(resultSet.getLong("time"));
                 order.setMilitaryWantTime(resultSet.getInt("mWantTime"));
+                order.setWantDate(TimeUtil.getThisAppDateFormat(resultSet.getString("wantDate")));
                 //Date date = new Date(order.getTimeStamp());
                 //order.setHumanReadableTime(date.toString());
                 list.add(order);
@@ -401,6 +403,7 @@ public class OrderDAOImpl extends BaseDAO implements OrderDAO{
             order.setTax(resultSet.getDouble("tax"));
             order.setTimeStamp(resultSet.getLong("time"));
             order.setMilitaryWantTime(resultSet.getInt("mWantTime"));
+            order.setWantDate(TimeUtil.getThisAppDateFormat(resultSet.getString("wantDate")));
         }catch(SQLException e){
             throw new DAOException(e.getMessage());
         }finally{

@@ -12,8 +12,17 @@ public class DineInOrder extends Order{
     
     private int tableNumber;
     private int militaryWantTime;
+    private String wantDate;
     
     public DineInOrder(){}
+
+    public String getWantDate() {
+        return wantDate;
+    }
+
+    public void setWantDate(String wantDate) {
+        this.wantDate = wantDate;
+    }
     
     public int getMilitaryWantTime(){
         return militaryWantTime;
@@ -39,6 +48,8 @@ public class DineInOrder extends Order{
                 "'timeStamp':'" + this.getTimeStamp() + "'," +
                 "'humanReadableTime':'" + this.getHumanReadableTime() + "'," +
                 "'table':'" + this.getTableNumber() + "'," +
-                "'mWantTime':'" + this.getMilitaryWantTime() + "'}";             
+                "'mWantTime':'" + this.getMilitaryWantTime() + "'," +
+                "'wantTime':'" + 
+                "'}";             
     }
 }

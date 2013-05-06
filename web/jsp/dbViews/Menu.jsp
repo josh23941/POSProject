@@ -28,6 +28,11 @@
             var _itemJSONArray = ${itemsJSON};
         </script>
         <script type="text/javascript" src="/POSProject/resources/menuFunctions.js"></script>
+        <style type="text/css">
+            #datePicker div{
+                font-size:10px;
+            }
+        </style>
     </head>
     
     <body class="default">
